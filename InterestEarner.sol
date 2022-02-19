@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import "openzeppelin-solidity/contracts/utils/math/SafeMath.sol";
 
-contract SimpleStaking {
+contract InterestEarner {
     // boolean to prevent reentrancy
     bool internal locked;
 
