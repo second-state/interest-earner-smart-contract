@@ -154,14 +154,17 @@ contract InterestEarner {
         if (initialStakingTimestamp[msg.sender] == 0){
             initialStakingTimestamp[msg.sender] = block.timestamp;
         }
-        // Let's calculate the maximum amount which can be earned per annum
-        uint256 interestEarnedPerAnnum = amount.mul(percentageBasisPoints.div(10000));
+        // Let's calculate the maximum amount which can be earned per annum (start with mul calculation first so we avoid values lower than one)
+        uint256 interestEarnedPerAnnum_pre = amount.mul(percentageBasisPoints);
+        // Now we can perform the div because the pre number is large
+        uint256 interestEarnedPerAnnum_post = interestEarnedPerAnnum_pre.div(10000);
+        // Let's calculate how many wei are earned per second
+        uint256 weiPerSecond = interestEarnedPerAnnum_post.div(31536000);
+        require(weiPerSecond > 0, "Interest on this amount is too low to calculate, please try a greater amount");
         // Let's calculate the release date
         uint256 releaseEpoch = initialStakingTimestamp[msg.sender].add(timePeriod);
         // Let's fragment the interest earned per annum down to the remaining time left on this staking round
         uint256 secondsRemaining = releaseEpoch.sub(block.timestamp);
-        // Let's calculate how many wei are earned per second
-        uint256 weiPerSecond = interestEarnedPerAnnum.div(31536000);
         // There are 31536000 seconds per annum, so let's calculate the interest for this remaining time period
         uint256 interestEarnedForThisStake = weiPerSecond.mul(secondsRemaining);
         // Make sure that contract's reserve pool has enough to service this transaction
