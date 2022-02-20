@@ -150,6 +150,10 @@ contract InterestEarner {
     /// @param amount to allocate to recipient.
     function stakeTokens(IERC20 token, uint256 amount) public timePeriodIsSet percentageIsSet {
         require(token == erc20Contract, "You are only allowed to stake the official erc20 token address which was passed into this contract's constructor");
+        // Set the initial staking timestamp (if not already set)
+        if (initialStakingTimestamp[msg.sender] == 0){
+            initialStakingTimestamp[msg.sender] = block.timestamp;
+        }
         // Let's calculate the maximum amount which can be earned per annum
         uint256 interestEarnedPerAnnum = amount.mul(percentageBasisPoints.div(10000));
         // Let's calculate the release date
