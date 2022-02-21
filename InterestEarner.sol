@@ -201,19 +201,23 @@ contract InterestEarner {
         emit InterestEarned(msg.sender, interestEarnedForThisStake);
     }
 
-    /// @dev Allows user to unstake tokens after the correct time period has elapsed. 
-    //  All interest earned during the elapsed time period is paid out when any amount of tokens are unlocked
+    /// @dev Allows user to unstake tokens and withdraw their interest after the correct time period has elapsed. All funds are released and the user's initial staking timestamp is reset to allow for the user to start another round of interest earning. A single user can not have overlapping rounds of staking.
+    //  All tokens are unstaked and all interest earned during the elapsed time period is paid out 
     /// @param token - address of the official ERC20 token which is being unlocked here.
     function unstakeAllTokensAndWithdrawInterestEarned(IERC20 token) public timePeriodIsSet percentageIsSet noReentrant {
         // Ensure that there is a current round of interest at play
         require(initialStakingTimestamp[msg.sender] != 0, "No tokens staked at present");
+        // Ensure that the current time period has elapsed and that funds are ready to be unstaked
         require(block.timestamp > (initialStakingTimestamp[msg.sender].add(timePeriod)), "Locking time period is still active, please try again later");
+        // Ensure the official ERC20 contract is being referenced
         require(token == erc20Contract, "Token parameter must be the same as the erc20 contract address which was passed into the constructor");
         // Both expectedInterest and balances must be sent back to the user's wallet as part of this function
         // Create a value which represents the amount of tokens about to be unstaked
         uint256 amountToUnstake = balances[msg.sender];
         // Create a value which represents the amount of interest about to be paid
         uint256 interestToPayOut = expectedInterest[msg.sender];
+        // Make sure that contract's reserve pool has enough to service this transaction
+        require(interestToPayOut <= token.balanceOf(address(this)), "Not enough STATE tokens in the reserve pool to pay out the interest earned, please contact owner of this contract");
         // Adjust the already withdrawn mapping to reflect the amount which the msg.sender is unstaking
         alreadyWithdrawn[msg.sender] = alreadyWithdrawn[msg.sender].add(amountToUnstake);
         // Reduce the balance of the msg.sender to reflect how much they are unstaking during this transaction
