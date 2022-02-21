@@ -46,6 +46,7 @@ contract InterestEarner {
     event TokensStaked(address from, uint256 amount);
     event TokensUnstaked(address to, uint256 amount);
     event InterestEarned(address to, uint256 amount);
+    event InterestWithdrawn(address to, uint256 amount);
 
     /// @dev Deploys contract and links the ERC20 token which we are staking, also sets owner as msg.sender and sets timePeriodIsSet & percentageSet & locked bools to false.
     /// @param _erc20_contract_address.
@@ -219,7 +220,7 @@ contract InterestEarner {
         balances[msg.sender] = balances[msg.sender].sub(amount);
         // Reduce the value which represents interest owed to the msg.sender all the way to zero, because we are paying out all of the interest in this transaction
         expectedInterest[msg.sender] = 0;
-        // Make sure that this transaction will revert if there is a discrepancy in the expected interest values
+        // Make sure that this transaction will revert if there is a discrepancy in the expected interest values which are held within this contract
         require(totalExpectedInterest >= interestToPayOut);
         // Reduce the total amount of interest owed by this contract (to all of its users) using the appropriate amount
         totalExpectedInterest.sub(interestToPayOut);
@@ -229,6 +230,7 @@ contract InterestEarner {
         token.safeTransfer(msg.sender, interestToPayOut);
         // Emit the event logs
         emit TokensUnstaked(msg.sender, amount);
+        emit InterestWithdrawn(msg.sender, interestToPayOut);
     }
 
     /// @dev Transfer accidentally locked ERC20 tokens.
