@@ -64,6 +64,12 @@ contract InterestEarner {
         locked = false;
         // Initialize the total amount of STATE staked
         totalStateStaked = 0;
+        // Initialize the time period
+        timePeriod = 0;
+        // Initialize the base points (bps)
+        percentageBasisPoints = 0;
+        // Initialize total expectedinterest
+        totalExpectedInterest = 0;
     }
 
     // Modifier
@@ -143,6 +149,17 @@ contract InterestEarner {
         percentageBasisPoints = _percentageBasisPoints;
     }
 
+    /// @dev Allows the contract to share the amount of ERC20 tokens which are staked by its users
+    /// @return amount of tokens currently staked
+    function getTotalStakedStake() public view returns (uint256) {
+        return totalStateStaked;
+        }
+
+    /// @dev Allows the contract to share the current total expected interest which will be paid to all users
+    /// @return amount of tokens currently owned to users
+    function getTotalExpectedInterest() public view returns (uint256) {
+        return totalExpectedInterest;
+        }
 
     /// @dev Allows the contract to share its amount of ERC20 tokens i.e. the reserve pool which pays out each of the user's interest
     /// @param token, the official ERC20 token which this contract exclusively accepts.
