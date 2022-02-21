@@ -35,7 +35,8 @@ for i in range(1, worksheet.max_row+1):
                     raw_amount = worksheet.cell(row=i, column=3).value
                     #print(amount_temp)
                     amount = int(float(raw_amount))
-                    if amount > 0:
+                    # Testing that each amount is greater than amount of seconds in a year multiplied by ten thousand and less than 2**256 - 1 / 10, 000 which will avoid any overflow or zero situations
+                    if amount >= 315360000000 and amount < 11579208923731619542357098500868790785326998466564056403945758400791312963:
                         print("Correct!\nAddress: {0} \nValue: {1}\n\n".format(recipientAddress, amount))
                         totalToTransfer = totalToTransfer + amount
                         totalRows = totalRows + 1
