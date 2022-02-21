@@ -152,7 +152,7 @@ contract InterestEarner {
     /// @dev Allows the contract owner to allocate official ERC20 tokens to each future recipient (only one at a time).
     /// @param token, the official ERC20 token which this contract exclusively accepts.
     /// @param amount to allocate to recipient.
-    function stakeTokens(IERC20 token, uint256 amount) public timePeriodIsSet percentageIsSet {
+    function stakeTokens(IERC20 token, uint256 amount) public timePeriodIsSet percentageIsSet noReentrant{
         
         // Ensure that we are communicating with official ERC20 and not some other random ERC20 contract
         require(token == erc20Contract, "You are only allowed to stake the official erc20 token address which was passed into this contract's constructor");
