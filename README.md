@@ -19,11 +19,16 @@ Users earn interest based on the specific APY (which is set by the contract owne
 Background: For example, if this `setTimePeriod` value is set to 3600 seconds, then every user who stakes tokens will undergo a one hour interest earning round from the time of their first staked token. Once a user has unstaked (and collected their interest), they are free to kick off another round by staking tokens again; the next round will kick off as at the timestamp when the user calls the contract to stake their tokens again.
 
 - Call the `setPercentage` function. Passing in a value which conforms to the following base point system (bps)
-	-- 10000 wei is equivalent to 100%
-	-- 1000 wei is equivalent to 10%
-	-- 100 wei is equivalent to 1%
-	-- 10 wei is equivalent to 0.1%
-	-- 1 wei is equivalent to 0.01%
+
+	- 10000 wei is equivalent to 100%
+
+	- 1000 wei is equivalent to 10%
+
+	- 100 wei is equivalent to 1%
+
+	- 10 wei is equivalent to 0.1%
+
+	- 1 wei is equivalent to 0.01%
 	
 	Whereby a traditional floating point percentage like 8.54% would simply be 854 percentage basis points (or in terms of the ethereum uint256 variable, 854 wei). This percentage can only be set once and will remain the interest earning percentage for the live of the contract.
 
