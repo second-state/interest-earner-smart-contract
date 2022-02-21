@@ -36,7 +36,6 @@ contract InterestEarner {
 
 
     // Token amount variables
-    mapping(address => uint256) public alreadyWithdrawn;
     mapping(address => uint256) public balances;
 
     // ERC20 contract address
@@ -218,8 +217,6 @@ contract InterestEarner {
         uint256 interestToPayOut = expectedInterest[msg.sender];
         // Make sure that contract's reserve pool has enough to service this transaction
         require(interestToPayOut <= token.balanceOf(address(this)), "Not enough STATE tokens in the reserve pool to pay out the interest earned, please contact owner of this contract");
-        // Adjust the already withdrawn mapping to reflect the amount which the msg.sender is unstaking
-        alreadyWithdrawn[msg.sender] = alreadyWithdrawn[msg.sender].add(amountToUnstake);
         // Reduce the balance of the msg.sender to reflect how much they are unstaking during this transaction
         balances[msg.sender] = balances[msg.sender].sub(amountToUnstake);
         // Reset the initialStakingTimestamp[msg.sender] in preparation for future rounds of interest earning from the specific user
@@ -234,8 +231,6 @@ contract InterestEarner {
             require(totalExpectedInterest >= interestToPayOut);
             // Reduce the value which represents interest owed to the msg.sender
             expectedInterest[msg.sender] = expectedInterest[msg.sender].sub(interestToPayOut);
-            // Adjust the already withdrawn mapping to reflect the amount of earned interest which the msg.sender is now receiving
-            alreadyWithdrawn[msg.sender] = alreadyWithdrawn[msg.sender].add(interestToPayOut);
             // Reduce the total amount of interest owed by this contract (to all of its users) using the appropriate amount
             totalExpectedInterest.sub(interestToPayOut);
             // Transfer interest earned during the time period, into the user's wallet
