@@ -202,7 +202,8 @@ contract InterestEarner {
         emit InterestEarned(msg.sender, interestEarnedForThisStake);
     }
 
-    /// @dev Allows user to unstake tokens after the correct time period has elapsed
+    /// @dev Allows user to unstake tokens after the correct time period has elapsed. 
+    //  All interest earned during the elapsed time period is paid out when any amount of tokens are unlocked
     /// @param token - address of the official ERC20 token which is being unlocked here.
     /// @param amount - the amount to unlock (in wei)
     function unstakeTokens(IERC20 token, uint256 amount) public timePeriodIsSet percentageIsSet noReentrant {
@@ -214,23 +215,27 @@ contract InterestEarner {
         uint256 interestToPayOut = expectedInterest[msg.sender];
         // Adjust the already withdrawn mapping to reflect the amount which the msg.sender is unstaking
         alreadyWithdrawn[msg.sender] = alreadyWithdrawn[msg.sender].add(amount);
-        // Adjust the already withdrawn mapping to reflect the amount of earned interest which the msg.sender is now receiving
-        alreadyWithdrawn[msg.sender] = alreadyWithdrawn[msg.sender].add(expectedInterest[msg.sender]);
         // Reduce the balance of the msg.sender to reflect how much they are unstaking during this transaction
         balances[msg.sender] = balances[msg.sender].sub(amount);
-        // Reduce the value which represents interest owed to the msg.sender all the way to zero, because we are paying out all of the interest in this transaction
-        expectedInterest[msg.sender] = 0;
-        // Make sure that this transaction will revert if there is a discrepancy in the expected interest values which are held within this contract
-        require(totalExpectedInterest >= interestToPayOut);
-        // Reduce the total amount of interest owed by this contract (to all of its users) using the appropriate amount
-        totalExpectedInterest.sub(interestToPayOut);
         // Transfer staked tokens back to user's wallet
         token.safeTransfer(msg.sender, amount);
-        // Transfer interest earned during the time period, into the user's wallet
-        token.safeTransfer(msg.sender, interestToPayOut);
-        // Emit the event logs
+        // Emit the event log
         emit TokensUnstaked(msg.sender, amount);
-        emit InterestWithdrawn(msg.sender, interestToPayOut);
+        // Finally, perform interest withdrawl tasks if required
+        if(interestToPayOut > 0){
+            // Make sure that this transaction will revert if there is a discrepancy in the expected interest values which are held within this contract
+            require(totalExpectedInterest >= interestToPayOut);
+            // Reduce the value which represents interest owed to the msg.sender all the way to zero, because we are paying out all of the interest in this transaction
+            expectedInterest[msg.sender] = 0;
+            // Adjust the already withdrawn mapping to reflect the amount of earned interest which the msg.sender is now receiving
+            alreadyWithdrawn[msg.sender] = alreadyWithdrawn[msg.sender].add(interestToPayOut);
+            // Reduce the total amount of interest owed by this contract (to all of its users) using the appropriate amount
+            totalExpectedInterest.sub(interestToPayOut);
+            // Transfer interest earned during the time period, into the user's wallet
+            token.safeTransfer(msg.sender, interestToPayOut);
+            // Emit the event log
+            emit InterestWithdrawn(msg.sender, interestToPayOut);
+        }
     }
 
     /// @dev Transfer accidentally locked ERC20 tokens.
