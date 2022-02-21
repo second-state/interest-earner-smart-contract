@@ -16,6 +16,9 @@ contract InterestEarner {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
 
+    // Input validation
+    uint256 internal MAX_INT = 2**256 - 1;
+
     // Contract owner
     address public owner;
 
@@ -40,7 +43,7 @@ contract InterestEarner {
     IERC20 public erc20Contract;
 
     // Events
-    event tokensStaked(address from, uint256 amount);
+    event TokensStaked(address from, uint256 amount);
     event TokensUnstaked(address to, uint256 amount);
     event InterestEarned(address to, uint256 amount);
 
@@ -149,14 +152,28 @@ contract InterestEarner {
     /// @param token, the official ERC20 token which this contract exclusively accepts.
     /// @param amount to allocate to recipient.
     function stakeTokens(IERC20 token, uint256 amount) public timePeriodIsSet percentageIsSet {
+        
+        // Ensure that we are communicating with official ERC20 and not some other random ERC20 contract
         require(token == erc20Contract, "You are only allowed to stake the official erc20 token address which was passed into this contract's constructor");
-        // Set the initial staking timestamp (if not already set)
+        // Ensure that the message sender actually has enough tokens in their wallet to proceed
+        require(amount <= token.balanceOf(msg.sender), "Not enough ERC20 tokens in your wallet, please try lesser amount");
+        // Ensure minimum "amount" requirements
+        // Details:
+        // There are 31536000 seconds in a year
+        // We use percentage basis points which have a max value of 10, 000 (i.e. a range from 1 to 10, 000 which is equivalent to 0.01% to 100% interest)
+        // Therefore, in terms of minimum allowable value, we need the staked amount to always be greater than 0.00000031536 ETH
+        // Having this minimum amount will avoid us having any zero values in our calculations (anything multiplied by zero is zero; must avoid this at all costs)
+        // This is fair enough given that this approach allows us to calculate interest down to 0.01% increments with minimal rounding adjustments
+        require(amount >= 315360000000, "Amount to stake must be greater than 0.00000031536 ETH");
+        // Similarly, in terms of maximum allowable value, we need the staked amount to be less than 2**256 - 1 / 10, 000 (to avoid overflow)
+        require(amount < MAX_INT.div(10000) , "Maximum amount must be smaller, please try again");
+        // If this is the first time an external account address is staking, then we need to set the initial staking timestamp to the currently block's timestamp
         if (initialStakingTimestamp[msg.sender] == 0){
             initialStakingTimestamp[msg.sender] = block.timestamp;
         }
         // Let's calculate the maximum amount which can be earned per annum (start with mul calculation first so we avoid values lower than one)
         uint256 interestEarnedPerAnnum_pre = amount.mul(percentageBasisPoints);
-        // Now we can perform the div because the pre number is large
+        // We use basis points so that Ethereum's uint256 (which does not have decimals) can have percentages of 0.01% increments. The following line caters for the basis points offset
         uint256 interestEarnedPerAnnum_post = interestEarnedPerAnnum_pre.div(10000);
         // Let's calculate how many wei are earned per second
         uint256 weiPerSecond = interestEarnedPerAnnum_post.div(31536000);
@@ -165,6 +182,8 @@ contract InterestEarner {
         uint256 releaseEpoch = initialStakingTimestamp[msg.sender].add(timePeriod);
         // Let's fragment the interest earned per annum down to the remaining time left on this staking round
         uint256 secondsRemaining = releaseEpoch.sub(block.timestamp);
+        // We must ensure that there is a quantifiable amount of time remaining (so we can calculate some interest; albeit proportional)
+        require(secondsRemaining > 0, "There is not enough time left to stake for this current round");
         // There are 31536000 seconds per annum, so let's calculate the interest for this remaining time period
         uint256 interestEarnedForThisStake = weiPerSecond.mul(secondsRemaining);
         // Make sure that contract's reserve pool has enough to service this transaction
@@ -178,7 +197,7 @@ contract InterestEarner {
         // Update this user's interest component i.e. the amount of interest which will be paid from the reserve pool during unstaking
         expectedInterest[msg.sender] = expectedInterest[msg.sender].add(interestEarnedForThisStake);
         // Emit the log for this transaction
-        emit tokensStaked(msg.sender, amount);
+        emit TokensStaked(msg.sender, amount);
         emit InterestEarned(msg.sender, interestEarnedForThisStake);
     }
 
@@ -186,17 +205,30 @@ contract InterestEarner {
     /// @param token - address of the official ERC20 token which is being unlocked here.
     /// @param amount - the amount to unlock (in wei)
     function unstakeTokens(IERC20 token, uint256 amount) public timePeriodIsSet percentageIsSet noReentrant {
+        require(block.timestamp > (initialStakingTimestamp[msg.sender].add(timePeriod)), "Locking time period is still active, please try again later");
+        require(token == erc20Contract, "Token parameter must be the same as the erc20 contract address which was passed into the constructor");
         // Both expectedInterest and balances must be sent back to the user's wallet as part of this function
         require(balances[msg.sender] >= amount, "Insufficient token balance, try lesser amount");
-        require(token == erc20Contract, "Token parameter must be the same as the erc20 contract address which was passed into the constructor");
-        if (block.timestamp >= timePeriod) {
-            alreadyWithdrawn[msg.sender] = alreadyWithdrawn[msg.sender].add(amount);
-            balances[msg.sender] = balances[msg.sender].sub(amount);
-            token.safeTransfer(msg.sender, amount);
-            emit TokensUnstaked(msg.sender, amount);
-        } else {
-            revert("Tokens are only available after correct time period has elapsed");
-        }
+        // Create value which represents the amount of interest about to be paid
+        uint256 interestToPayOut = expectedInterest[msg.sender];
+        // Adjust the already withdrawn mapping to reflect the amount which the msg.sender is unstaking
+        alreadyWithdrawn[msg.sender] = alreadyWithdrawn[msg.sender].add(amount);
+        // Adjust the already withdrawn mapping to reflect the amount of earned interest which the msg.sender is now receiving
+        alreadyWithdrawn[msg.sender] = alreadyWithdrawn[msg.sender].add(expectedInterest[msg.sender]);
+        // Reduce the balance of the msg.sender to reflect how much they are unstaking during this transaction
+        balances[msg.sender] = balances[msg.sender].sub(amount);
+        // Reduce the value which represents interest owed to the msg.sender all the way to zero, because we are paying out all of the interest in this transaction
+        expectedInterest[msg.sender] = 0;
+        // Make sure that this transaction will revert if there is a discrepancy in the expected interest values
+        require(totalExpectedInterest >= interestToPayOut);
+        // Reduce the total amount of interest owed by this contract (to all of its users) using the appropriate amount
+        totalExpectedInterest.sub(interestToPayOut);
+        // Transfer staked tokens back to user's wallet
+        token.safeTransfer(msg.sender, amount);
+        // Transfer interest earned during the time period, into the user's wallet
+        token.safeTransfer(msg.sender, interestToPayOut);
+        // Emit the event logs
+        emit TokensUnstaked(msg.sender, amount);
     }
 
     /// @dev Transfer accidentally locked ERC20 tokens.
