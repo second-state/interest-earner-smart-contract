@@ -37,6 +37,7 @@ contract InterestEarner {
 
     // Token amount variables
     mapping(address => uint256) public balances;
+    uint256 public totalStateStaked;
 
     // ERC20 contract address
     IERC20 public erc20Contract;
@@ -61,6 +62,8 @@ contract InterestEarner {
         erc20Contract = _erc20_contract_address;
         // Initialize the reentrancy variable to not locked
         locked = false;
+        // Initialize the total amount of STATE staked
+        totalStateStaked = 0;
     }
 
     // Modifier
@@ -189,6 +192,8 @@ contract InterestEarner {
         require(totalExpectedInterest.add(interestEarnedForThisStake) <= token.balanceOf(address(this)), "Not enough STATE tokens in the reserve pool, please contact owner of this contract");
         // Adding this user's expected interest to the expected interest variable
         totalExpectedInterest.add(interestEarnedForThisStake);
+        // Increment the total State staked
+        totalStateStaked = totalStateStaked.add(amount);
         // Transfer the tokens into the contract (stake/lock)
         token.safeTransferFrom(msg.sender, address(this), amount);
         // Update this user's locked amount (the amount the user is entitled to unstake/unlock)
@@ -213,6 +218,8 @@ contract InterestEarner {
         // Both expectedInterest and balances must be sent back to the user's wallet as part of this function
         // Create a value which represents the amount of tokens about to be unstaked
         uint256 amountToUnstake = balances[msg.sender];
+        // Decrease the total STATE staked
+        totalStateStaked = totalStateStaked.sub(amountToUnstake);
         // Create a value which represents the amount of interest about to be paid
         uint256 interestToPayOut = expectedInterest[msg.sender];
         // Make sure that contract's reserve pool has enough to service this transaction
