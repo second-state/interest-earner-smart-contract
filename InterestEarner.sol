@@ -208,7 +208,7 @@ contract InterestEarner {
         // Make sure that contract's reserve pool has enough to service this transaction
         require(totalExpectedInterest.add(interestEarnedForThisStake) <= token.balanceOf(address(this)), "Not enough STATE tokens in the reserve pool, please contact owner of this contract");
         // Adding this user's expected interest to the expected interest variable
-        totalExpectedInterest.add(interestEarnedForThisStake);
+        totalExpectedInterest = totalExpectedInterest.add(interestEarnedForThisStake);
         // Increment the total State staked
         totalStateStaked = totalStateStaked.add(amount);
         // Transfer the tokens into the contract (stake/lock)
@@ -265,7 +265,7 @@ contract InterestEarner {
             // Make sure that contract's reserve pool has enough to service this transaction
             require(totalExpectedInterest.add(interestEarnedForThisStake) <= token.balanceOf(address(this)), "Not enough STATE tokens in the reserve pool, please contact owner of this contract");
             // Adding this user's expected interest to the expected interest variable
-            totalExpectedInterest.add(interestEarnedForThisStake);
+            totalExpectedInterest = totalExpectedInterest.add(interestEarnedForThisStake);
             // Increment the total State staked
             totalStateStaked = totalStateStaked.add(amounts[i]);
             // Update this user's locked amount (the amount the user is entitled to unstake/unlock)
@@ -312,7 +312,7 @@ contract InterestEarner {
             // Reduce the value which represents interest owed to the msg.sender
             expectedInterest[msg.sender] = expectedInterest[msg.sender].sub(interestToPayOut);
             // Reduce the total amount of interest owed by this contract (to all of its users) using the appropriate amount
-            totalExpectedInterest.sub(interestToPayOut);
+            totalExpectedInterest = totalExpectedInterest.sub(interestToPayOut);
             // Transfer interest earned during the time period, into the user's wallet
             token.safeTransfer(msg.sender, interestToPayOut);
             // Emit the event log
