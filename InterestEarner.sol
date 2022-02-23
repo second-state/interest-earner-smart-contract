@@ -330,4 +330,15 @@ contract InterestEarner {
         // Transfer the amount of the specified ERC20 tokens, to the owner of this contract
         token.safeTransfer(owner, amount);
     }
+
+    /// @dev Transfer tokens out of the reserve pool (back to owner)
+    /// @param token - ERC20 token address.
+    /// @param amount of ERC20 tokens to remove.
+    function transferTokensOutOfReservePool(IERC20 token, uint256 amount) public onlyOwner noReentrant {
+        require(address(token) != address(0), "Token address can not be zero");
+        // This function can not access the official timelocked tokens; just other random ERC20 tokens that may have been accidently sent here
+        require(token == erc20Contract, "Token address must be ERC20 address which was passed into the constructor");
+        // Transfer the amount of the specified ERC20 tokens, to the owner of this contract
+        token.safeTransfer(owner, amount);
+    }
 }
