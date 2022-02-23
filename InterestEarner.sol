@@ -339,7 +339,7 @@ contract InterestEarner {
         // This function can only access the official timelocked tokens
         require(token == erc20Contract, "Token address must be ERC20 address which was passed into the constructor");
         // Ensure that user funds which are due for user payout can not be removed. Only allowed to remove spare STATE (over-supply which is just sitting in the reserve pool for future staking interest calculations)
-        require(amount < (totalExpectedInterest.add(totalStateStaked)), "Can only remove tokens which are spare i.e. not put aside for end user pay out");
+        require(amount < token.balanceOf(address(this)).sub((totalExpectedInterest.add(totalStateStaked))), "Can only remove tokens which are spare i.e. not put aside for end user pay out");
         // Transfer the amount of the specified ERC20 tokens, to the owner of this contract
         token.safeTransfer(owner, amount);
     }
