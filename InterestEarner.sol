@@ -205,8 +205,8 @@ contract InterestEarner {
         require(secondsRemaining > 0, "There is not enough time left to stake for this current round");
         // There are 31536000 seconds per annum, so let's calculate the interest for this remaining time period
         uint256 interestEarnedForThisStake = weiPerSecond.mul(secondsRemaining);
-        // Make sure that contract's reserve pool has enough to service this transaction
-        require(totalExpectedInterest.add(interestEarnedForThisStake) <= token.balanceOf(address(this)), "Not enough STATE tokens in the reserve pool, please contact owner of this contract");
+        // Make sure that contract's reserve pool has enough to service this transaction. I.e. there is enough STATE in this contract to pay this user's interest (not including/counting any previous end user's staked STATE or interest which they will eventually take as a pay out)
+        require(totalExpectedInterest.add(interestEarnedForThisStake) <= token.balanceOf(address(this)).sub(totalStateStaked), "Not enough STATE tokens in the reserve pool, please contact owner of this contract");
         // Adding this user's expected interest to the expected interest variable
         totalExpectedInterest = totalExpectedInterest.add(interestEarnedForThisStake);
         // Increment the total State staked
@@ -262,8 +262,8 @@ contract InterestEarner {
             require(secondsRemaining > 0, "There is not enough time left to stake for this current round");
             // There are 31536000 seconds per annum, so let's calculate the interest for this remaining time period
             uint256 interestEarnedForThisStake = weiPerSecond.mul(secondsRemaining);
-            // Make sure that contract's reserve pool has enough to service this transaction
-            require(totalExpectedInterest.add(interestEarnedForThisStake) <= token.balanceOf(address(this)), "Not enough STATE tokens in the reserve pool, please contact owner of this contract");
+            // Make sure that contract's reserve pool has enough to service this transaction. I.e. there is enough STATE in this contract to pay this user's interest (not including/counting any previous end user's staked STATE or interest which they will eventually take as a pay out)
+            require(totalExpectedInterest.add(interestEarnedForThisStake) <= token.balanceOf(address(this)).sub(totalStateStaked), "Not enough STATE tokens in the reserve pool, please contact owner of this contract");
             // Adding this user's expected interest to the expected interest variable
             totalExpectedInterest = totalExpectedInterest.add(interestEarnedForThisStake);
             // Increment the total State staked
