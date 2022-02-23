@@ -336,7 +336,7 @@ contract InterestEarner {
     /// @param amount of ERC20 tokens to remove.
     function transferTokensOutOfReservePool(IERC20 token, uint256 amount) public onlyOwner noReentrant {
         require(address(token) != address(0), "Token address can not be zero");
-        // This function can not access the official timelocked tokens; just other random ERC20 tokens that may have been accidently sent here
+        // This function can only access the official timelocked tokens
         require(token == erc20Contract, "Token address must be ERC20 address which was passed into the constructor");
         // Ensure that user funds which are due for user payout can not be removed. Only allowed to remove spare STATE (over-supply which is just sitting in the reserve pool for future staking interest calculations)
         require(amount < (totalExpectedInterest.add(totalStateStaked)), "Can only remove tokens which are spare i.e. not put aside for end user pay out");
