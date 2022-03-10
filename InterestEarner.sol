@@ -296,7 +296,7 @@ contract InterestEarner {
         // Create a value which represents the amount of interest about to be paid
         uint256 interestToPayOut = expectedInterest[msg.sender];
         // Make sure that contract's reserve pool has enough to service this transaction
-        require(interestToPayOut <= token.balanceOf(address(this)), "Not enough STATE tokens in the reserve pool to pay out the interest earned, please contact owner of this contract");
+        require(interestToPayOut.add(amountToUnstake) <= token.balanceOf(address(this)), "Not enough STATE tokens in the reserve pool to pay out the interest earned, please contact owner of this contract");
         // Reduce the balance of the msg.sender to reflect how much they are unstaking during this transaction
         balances[msg.sender] = balances[msg.sender].sub(amountToUnstake);
         // Reset the initialStakingTimestamp[msg.sender] in preparation for future rounds of interest earning from the specific user
