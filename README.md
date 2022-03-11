@@ -80,48 +80,59 @@ Background: For example, a traditional floating point percentage like 8.54% is e
 
 Please see the section called [setting up Ropsten testnet](#setting-up-ropsten-testnet) below if you need help setting up a testnet environment.
 
-**This approval step is actually performed by the DApp's User Interface (UI).** The DApp will first check the `approval` relationship of the Interest Earner Smart Contract's deployment address and the user (`msg.sender`) and then present the user with an offer to approve a MetaMask transaction (in the event that the `approve` function needs to be actioned before the DApp can successfully proceed with the task of transferring the suggested amount of tokens from the ERC20 contract to the Staking contract). Once this back and forth has occured, the DApp will know that it is possible to proceed and will get on with the staking (as outlined in the step following this one)
+### Deploy an ERC20 token for testing
 
-Go to the ERC20 contract using wallet software of a user who holds ERC20 tokens.
+Deploy an ERC20 token to be used in conjuntion with this smart contract and UI.
 
-Perform the `approve` function by passing in the Interest Earner Smart Contract's deployment address. Also add an amount of tokens which you would like to approve the Interest Earner Smart Contract to spend on the user's behalf.
+In this test case we have used [the ParaState ERC20 source code](https://etherscan.io/address/0xdc6104b7993e997ca5f08acab7d3ae86e13d20a6#code) and deployed this documentation's Test ERC20 token over on [Ropsten test network](https://ropsten.etherscan.io/address/0xC9A46174D2dE2c5DA9DaD1226F58BdA9a0698Ba1).
+
+The test ERC20 contract address on the Ropsten network is `0xC9A46174D2dE2c5DA9DaD1226F58BdA9a0698Ba1`
+
+### Deploy the interest earner smart contract for testing
+
+In this test case, in relation to our interest earner, we again deploy on [Ropsten test network](https://ropsten.etherscan.io/address/0xa45985abdFA5Ca853104Fb9104Dd8C4D75Cc2Ea2)
+
+The test interest earner address on the Ropsten network is `0xa45985abdFA5Ca853104Fb9104Dd8C4D75Cc2Ea2`
 
 
-<img width="285" alt="Screen Shot 2022-01-29 at 4 12 02 pm" src="https://user-images.githubusercontent.com/9831342/151650067-6c2d5144-3c38-40d9-8f46-ddf3c9273f0d.png">
+### Configure the interest earner for normal operation
 
-Confirm the approval worked by calling the `allowance` function (passing in the user's address and the Interest Earner Smart Contract's deployment address)
+First we set the term by calling the `setTimePeriod` function (as the owner). In this example we are making the term **7 Days** which is equal to `604800` seconds.
 
-<img width="279" alt="Screen Shot 2022-01-29 at 4 12 09 pm" src="https://user-images.githubusercontent.com/9831342/151650100-d10386c1-63d4-4359-af70-f36b966b36aa.png">
 
-## Test the contract (staking)
+Next we set the percentage basis points (as the owner). In this example we are making the simple annual interest rate `10%` per annum which is equal to `1000` Wei.
 
-Go to the Interest Earner Smart Contract and perform the `stakeTokens` function, by passing in the ERC20 contract's address and the amount of tokens you approved in the above step.
+### Simulate a user staking (for 7 days at 10 percent)
 
-The tokens will be staked now.
+First, **as the owner**, we have to send some STATE to the reserve pool so that the contract is able to pay any upcoming staking users. The contract will not let a user stake if the reserve pool can not pay out the principle and interest of the entire staking/un-staking rund trip for the term.
 
-You can check that the Interest Earner Smart Contract actually holds these tokens by checking the ERC20's `balanceOf` function (by passing in the Interest Earner Smart Contract's address)
+We transfer `100` STATE from the owner's address to the contract's address. **Note: nobody except for the interest earner contract instance owner should EVER send STATE directly to the contract address EVER.**
 
-<img width="293" alt="Screen Shot 2022-01-29 at 4 22 50 pm" src="https://user-images.githubusercontent.com/9831342/151650182-02b155c2-115a-46a1-8f78-62db241cbe80.png">
+We transferred `100` STATE because the predicted interest will be `95.89041` i.e. 
+`50, 000` * `0.10` = `5, 000` (5, 000 is 10 percent of 50, 000)
+(`5, 000` / `365` days) * `7` days = `95.89041` (`95.89041` is the interest which the user will earn at 10% during the 7 day period).
 
-You can also check that your user's balance of ERC20 tokens has reduced by 250 (was 500 before)
+Next, **as the user (not the owner)**, we perform the `approve` function (on the ERC20 contract instance) by passing in the Interest Earner Smart Contract's deployment address. Also add an amount of tokens which you would like to approve the Interest Earner Smart Contract to spend on the user's behalf. In this case `50, 000`.
 
-<img width="358" alt="Screen Shot 2022-01-29 at 4 23 33 pm" src="https://user-images.githubusercontent.com/9831342/151650217-1cc42488-e7c9-4254-bd3e-f013349f0513.png">
+**This approval step is actually performed by the DApp's User Interface (UI), we are just testing manually here on purpose.**
 
-## Test the contract (un-staking)
+Next, **as the user (not the owner)**, we check that the user has actually approved the contract by calling the `allowance` function of the ERC20 contract (passing in  the owner and spender address).
 
-Go ahead and call the Interest Earner Smart Contract's `unstakeTokens` function by passing in the ERC20 contract's address and also the amount you wish to unstake. The `msg.sender` is the recipient by default, so we don't need to pass your user's address in. This is a feature which only allows the `msg.sender` to unlock their own tokens. Other users can not unstake other random user tokens.
+Next, **as the user (not the owner)**, we stake the `50, 000` tokens by calling the `stakeTokens` function, by passing in the ERC20 contract address and amount in wei (`50000`).
 
-You will now see that your user's ERC20 balance in their wallet has risen back from 250 to 500.
+### Check details associated with this user's staking
 
-<img width="353" alt="Screen Shot 2022-01-29 at 4 27 40 pm" src="https://user-images.githubusercontent.com/9831342/151650326-d9812ee5-6b6f-4627-a107-c6d0e84fca3b.png">
+We can see that the `initialStakingTimestamp` has been set. `1646981630` is equal to Friday, 11 March 2022 16:53:50 GMT+10:00 which is correct. You can cross reference this time against the [block timestamp](https://ropsten.etherscan.io/tx/0xb957e3a1ccfcabc67c6623a11cf1cc313e635a92aad0c76aa3daf3bba9645baa) as at when the `stakeTokens` function was called.
 
-You will also see that the ERC20 token contract no longer shows the Interest Earner Smart Contract's address as a holder of the ERC20 token.
+We can see that the `getTotalStakedState` getter shows the `50, 000` staked tokens from the user.
 
-<img width="287" alt="Screen Shot 2022-01-29 at 4 29 19 pm" src="https://user-images.githubusercontent.com/9831342/151650351-fa55287f-aad4-43f0-b7f7-ab8b185106cd.png">
+We can see that the `getTotalExpectedInterest` getter show the correct `95.89041` interest owing.
 
-Finally, you will also notice that the Interest Earner Smart Contract's `balance` for that specific user is back to `0`
+We can see that the `expectedInterest` for just that user (by passing in the user's address) is also showing that correct `95.89041` interest owing.
 
-<img width="283" alt="Screen Shot 2022-01-29 at 4 30 21 pm" src="https://user-images.githubusercontent.com/9831342/151650392-6b1d2fe9-18e4-4fea-a8fc-08865eac76ca.png">
+We can see that the `balances` for just that user is `50000000000000000000000` Wei (which is the correct `50, 000` tokens).
+
+---
 
 ## Setting up Ropsten Testnet
 
@@ -147,3 +158,12 @@ You can now go ahead and compile, deploy, configure and interact directly with t
 
 
 ---
+
+## Additional manual checks performed
+
+- [x] only owner can call set percentage 
+- [x] only owner can call set time period
+- [x] the owner can not call the set percentage more than once
+- [x] the owner can not call the set time period more than once
+- [x] a user can not stake tokens if there is no STATE in the reserve pool
+

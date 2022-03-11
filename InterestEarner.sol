@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: MIT
-// WARNING this contract has not been independently tested or audited
+// IF YOU ARE NOT THE OWNER, DO NOT SEND TOKENS DIRECTLY TO THIS CONTRACT - ONLY USE THIS CONTRACT THROUGH THE INTERFACE (source: https://github.com/second-state/interest-earner-user-interface)
+// DO NOT SEND ETH TO THIS CONTRACT
+
+// WARNING this contract has NOT been independently tested or audited
 // DO NOT use this contract with funds of real value until officially tested and audited by an independent expert or group
 
 pragma solidity 0.8.11;
