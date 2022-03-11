@@ -1,24 +1,34 @@
 # Interest Earner Smart Contract
 
-A smart contract which allows users to stake and un-stake a specified ERC20 token. 
-Staked tokens are locked for a specific length of time (set by the contrat owner at the outset).
-Once the time period has elapsed, the user can remove their tokens again.
+A smart contract which allows users to stake and un-stake a specified ERC20 token and earn interest as a result.
 
-Users earn interest based on the specific APY (which is set by the contract owner)
+Staked tokens are locked for a specific length of time (the term). This term is set (once only) by the contract owner at the outset. The term remains constant for all users who stake their tokens into this specific contract. The term can not be changed for this contract instance, once set.
+
+After a user has staked tokens and the term has elapsed, the user is then able to remove their tokens and the interest which they earned.
+
+The interest earned is based on the specific simple annual interest rate of this contract instance. As is the case with the term, the simple interest per annum is set (once only) by the contract owner at the outset. The simple annual interest rate remains constant for all users who stake their tokens into this specific contract. The simple interest per annum can not be changed for this contract instance, once set.
 
 ![Untitled Diagram (1)](https://user-images.githubusercontent.com/9831342/151649198-5de7bfe2-095a-4d14-9fd4-dd53d78e94a3.jpg)
 
 ## How to deploy
 
+### Compile
+
 - Compile the [InterestEarner.sol](https://github.com/second-state/interest-earner-smart-contract/blob/main/InterestEarner.sol) contract.
 
-- Deploy the contract by passing in the official ERC20 token's contract address as the one-and-only constructor parameter.
+### Deploy
 
-- Call the `setTimePeriod` function (as the contract owner) by passing in a value (in seconds) for which you want the timelock period to be. The value which you pass in, will be the value (in seconds) for which every round, for every different user, who interacts with this contract will experience. 
+- Deploy the contract by passing in the official ERC20 token's contract address (i.e. the address of the ERC20 contract instance which users will be staking here in this contract instance) as the one-and-only constructor parameter.
 
-Background: For example, if this `setTimePeriod` value is set to 3600 seconds, then every user who stakes tokens will undergo a one hour interest earning round from the time of their first staked token. Once a user has unstaked (and collected their interest), they are free to kick off another round by staking tokens again; the next round will kick off as at the timestamp when the user calls the contract to stake their tokens again.
+### Set the term (time period in seconds per interest earning round)
 
-- Call the `setPercentage` function. Passing in a value which conforms to the following base point system (bps)
+- Call the `setTimePeriod` function (as the contract owner) by passing in a value (in seconds) for which you want the term to be. For example a term of 1 month (30.44 days) is equivalent to 2629743 seconds.
+
+Background: Another example, if this `setTimePeriod` value is set to 3600 seconds, then every user who stakes tokens will undergo a one hour interest earning round from the time of their first staked token. Once a user has unstaked (and collected their interest), they are free to kick off another round by staking tokens again; the next round will kick off "as at" the timestamp when the user calls the contract to stake their tokens again.
+
+### Set simple annual interest rate
+
+- Call the `setPercentage` function. Passing in a value (in wei) which conforms to the following base point system (bps)
 
 	- 10000 wei is equivalent to 100%
 
@@ -30,7 +40,7 @@ Background: For example, if this `setTimePeriod` value is set to 3600 seconds, t
 
 	- 1 wei is equivalent to 0.01%
 	
-	Whereby a traditional floating point percentage like 8.54% would simply be 854 percentage basis points (or in terms of the ethereum uint256 variable, 854 wei). This percentage can only be set once and will remain the interest earning percentage for the live of the contract.
+Background: For example, a traditional floating point percentage like 8.54% is equivalent to 854 percentage basis points (or in terms of the ethereum uint256 variable, 854 wei). This percentage can only be set once and will remain the interest earning percentage for the life of the contract.
 
 ## Test the contract (approval)
 
