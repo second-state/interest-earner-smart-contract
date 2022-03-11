@@ -222,62 +222,6 @@ contract InterestEarner {
         emit InterestEarned(msg.sender, interestEarnedForThisStake);
     }
 
-
-    /// @dev Allows the contract owner to allocate official ERC20 tokens to each future recipient 
-    /// @param token, the official ERC20 token which this contract exclusively accepts.
-    /// @param recipients, an array of addresses of the many recipient.
-    /// @param amounts to allocate to each of the many recipient.
-    function bulkStakeTokens(IERC20 token, address[] calldata recipients, uint256[] calldata amounts) external onlyOwner timePeriodIsSet percentageIsSet noReentrant{
-        require(recipients.length == amounts.length, "The recipients and amounts arrays must be the same size in length");
-        // Ensure that we are communicating with official ERC20 and not some other random ERC20 contract
-        require(token == erc20Contract, "You are only allowed to stake the official erc20 token address which was passed into this contract's constructor");
-        for(uint256 i = 0; i < recipients.length; i++) {
-            require(recipients[i] != address(0), "Address can not be the zero address");
-            // Ensure minimum "amount" requirements
-            // Details:
-            // There are 31536000 seconds in a year
-            // We use percentage basis points which have a max value of 10, 000 (i.e. a range from 1 to 10, 000 which is equivalent to 0.01% to 100% interest)
-            // Therefore, in terms of minimum allowable value, we need the staked amount to always be greater than 0.00000031536 ETH
-            // Having this minimum amount will avoid us having any zero values in our calculations (anything multiplied by zero is zero; must avoid this at all costs)
-            // This is fair enough given that this approach allows us to calculate interest down to 0.01% increments with minimal rounding adjustments
-            require(amounts[i] >= 315360000000, "Amount to stake must be greater than 0.00000031536 ETH");
-            // Similarly, in terms of maximum allowable value, we need the staked amount to be less than 2**256 - 1 / 10, 000 (to avoid overflow)
-            require(amounts[i] < MAX_INT.div(10000) , "Maximum amount must be smaller, please try again");
-            // If this is the first time an external account address is staking, then we need to set the initial staking timestamp to the currently block's timestamp
-            if (initialStakingTimestamp[recipients[i]] == 0){
-                initialStakingTimestamp[recipients[i]] = block.timestamp;
-            }
-            // Let's calculate the maximum amount which can be earned per annum (start with mul calculation first so we avoid values lower than one)
-            uint256 interestEarnedPerAnnum_pre = amounts[i].mul(percentageBasisPoints);
-            // We use basis points so that Ethereum's uint256 (which does not have decimals) can have percentages of 0.01% increments. The following line caters for the basis points offset
-            uint256 interestEarnedPerAnnum_post = interestEarnedPerAnnum_pre.div(10000);
-            // Let's calculate how many wei are earned per second
-            uint256 weiPerSecond = interestEarnedPerAnnum_post.div(31536000);
-            require(weiPerSecond > 0, "Interest on this amount is too low to calculate, please try a greater amount");
-            // Let's calculate the release date
-            uint256 releaseEpoch = initialStakingTimestamp[recipients[i]].add(timePeriod);
-            // Let's fragment the interest earned per annum down to the remaining time left on this staking round
-            uint256 secondsRemaining = releaseEpoch.sub(block.timestamp);
-            // We must ensure that there is a quantifiable amount of time remaining (so we can calculate some interest; albeit proportional)
-            require(secondsRemaining > 0, "There is not enough time left to stake for this current round");
-            // There are 31536000 seconds per annum, so let's calculate the interest for this remaining time period
-            uint256 interestEarnedForThisStake = weiPerSecond.mul(secondsRemaining);
-            // Make sure that contract's reserve pool has enough to service this transaction. I.e. there is enough STATE in this contract to pay this user's interest (not including/counting any previous end user's staked STATE or interest which they will eventually take as a pay out)
-            require(token.balanceOf(address(this)) >= totalStateStaked.add(totalExpectedInterest).add(interestEarnedForThisStake).add(amounts[i]),  "Not enough STATE tokens in the reserve pool, please contact owner of this contract");
-            // Adding this user's expected interest to the expected interest variable
-            totalExpectedInterest = totalExpectedInterest.add(interestEarnedForThisStake);
-            // Increment the total State staked
-            totalStateStaked = totalStateStaked.add(amounts[i]);
-            // Update this user's locked amount (the amount the user is entitled to unstake/unlock)
-            balances[recipients[i]] = balances[recipients[i]].add(amounts[i]);
-            // Update this user's interest component i.e. the amount of interest which will be paid from the reserve pool during unstaking
-            expectedInterest[recipients[i]] = expectedInterest[recipients[i]].add(interestEarnedForThisStake);
-            // Emit the log for this transaction
-            emit TokensStaked(recipients[i], amounts[i]);
-            emit InterestEarned(recipients[i], interestEarnedForThisStake);
-        }
-    }
-
     /// @dev Allows user to unstake tokens and withdraw their interest after the correct time period has elapsed. All funds are released and the user's initial staking timestamp is reset to allow for the user to start another round of interest earning. A single user can not have overlapping rounds of staking.
     //  All tokens are unstaked and all interest earned during the elapsed time period is paid out 
     /// @param token - address of the official ERC20 token which is being unlocked here.
