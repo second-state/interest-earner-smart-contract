@@ -133,12 +133,15 @@ Obtain some Ropsten Testnet ETH (rETH) from a Ropsten Testnet Faucet like the on
 
 ### Wallet software
 
-Connect your MetaMask wallet to the Ropsten Testnet
+Connect your MetaMask wallet to the Ropsten Testnet; if you can't see Ropsten in the list then click the `Show/hide test networks` button slider at the top.
+
+<img width="386" alt="Screen Shot 2022-03-11 at 3 19 11 pm" src="https://user-images.githubusercontent.com/9831342/157807070-587fa302-aa4e-4a18-bb47-f311ccec0ba2.png">
 
 ### Smart Contract IDE
 
 Open [Remix](https://remix.ethereum.org/) and select the "Injected Web3" option from the Environment menu on the bottom tab (Ethereum logo)
 
+<img width="456" alt="Screen Shot 2022-03-11 at 2 06 42 pm" src="https://user-images.githubusercontent.com/9831342/157806972-c5e01624-d558-4d26-a590-8f959aa701ff.png">
 
 You can now go ahead and compile, deploy, configure and interact directly with the contract.
 
