@@ -26,7 +26,7 @@ The interest earned is based on the specific simple annual interest rate of this
 
 Background: Another example, if this `setTimePeriod` value is set to 3600 seconds, then every user who stakes tokens will undergo a one hour interest earning round from the time of their first staked token. Once a user has unstaked (and collected their interest), they are free to kick off another round by staking tokens again; the next round will kick off "as at" the timestamp when the user calls the contract to stake their tokens again.
 
-### Set simple annual interest rate
+### Set the simple annual interest rate (as percentage basis points)
 
 - Call the `setPercentage` function. Passing in a value (in wei) which conforms to the following base point system (bps)
 
@@ -42,7 +42,43 @@ Background: Another example, if this `setTimePeriod` value is set to 3600 second
 	
 Background: For example, a traditional floating point percentage like 8.54% is equivalent to 854 percentage basis points (or in terms of the ethereum uint256 variable, 854 wei). This percentage can only be set once and will remain the interest earning percentage for the life of the contract.
 
-## Test the contract (approval)
+### Post deployment checklist
+
+**ERC20 Token Contract Instance**
+- [ ] Call the `erc20Contract()` getter function of the interest earner smart contract which you just deployed and ensure that the value returned is indeed the address of your ERC20 token (i.e. the ERC20 contract address which you expect users to stake and unstake) 
+
+**Time Period**
+- [ ] Call the `timePeriodSet()` getter function and ensure that the value returned is `true`
+- [ ] Call the `timePeriod()` getter function and ensure that the value returned is the term in seconds
+
+**Percentage Basis Points**
+- [ ] Call the `percentageSet()` getter function and ensure that the value returned is `true`
+- [ ] Call the `percentageBasisPoints()` getter function and ensure that the value returned is the percentage basis points which you desired. See the following table to convert from percentage basis points to percent.
+
+```
+10000 wei is equivalent to 100%
+1000 wei is equivalent to 10%
+100 wei is equivalent to 1%
+10 wei is equivalent to 0.1%
+1 wei is equivalent to 0.01%
+```
+
+**Ownership**
+- [ ] Call the `owner()` getter function and ensure that the value returned is the external account address which you desire (the interest earner smart contract's owner - you)
+
+**Initial values**
+- [ ] Call the `totalExpectedInterest()` getter function and ensure that the value returned is `0`
+- [ ] Call the `totalStateStaked()` getter function and ensure that the value returned is `0`
+- [ ] Call the `totalExpectedInterest()` getter function and ensure that the value returned is `0`
+
+---
+
+
+## Test the contract manually in Remix (as apposed to using the DApps User Interface (UI))
+
+### Choose a network
+
+Please see the section called setting up Ropsten testnet below if you need help setting up a testnet environment.
 
 **This approval step is actually performed by the DApp's User Interface (UI).** The DApp will first check the `approval` relationship of the Interest Earner Smart Contract's deployment address and the user (`msg.sender`) and then present the user with an offer to approve a MetaMask transaction (in the event that the `approve` function needs to be actioned before the DApp can successfully proceed with the task of transferring the suggested amount of tokens from the ERC20 contract to the Staking contract). Once this back and forth has occured, the DApp will know that it is possible to proceed and will get on with the staking (as outlined in the step following this one)
 
@@ -86,5 +122,24 @@ You will also see that the ERC20 token contract no longer shows the Interest Ear
 Finally, you will also notice that the Interest Earner Smart Contract's `balance` for that specific user is back to `0`
 
 <img width="283" alt="Screen Shot 2022-01-29 at 4 30 21 pm" src="https://user-images.githubusercontent.com/9831342/151650392-6b1d2fe9-18e4-4fea-a8fc-08865eac76ca.png">
+
+## Setting up Ropsten Testnet
+
+### Network tokens
+
+Obtain some Ropsten Testnet ETH (rETH) from a Ropsten Testnet Faucet like the one below
+
+< https://ropsten.oregonctf.org/ >
+
+### Wallet software
+
+Connect your MetaMask wallet to the Ropsten Testnet
+
+### Smart Contract IDE
+
+Open [Remix](https://remix.ethereum.org/) and select the "Injected Web3" option from the Environment menu on the bottom tab (Ethereum logo)
+
+
+You can now go ahead and compile, deploy, configure and interact directly with the contract.
 
 
