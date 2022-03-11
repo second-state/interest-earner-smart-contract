@@ -78,7 +78,7 @@ Background: For example, a traditional floating point percentage like 8.54% is e
 
 ### Choose a network
 
-Please see the section called setting up Ropsten testnet below if you need help setting up a testnet environment.
+Please see the section called [setting up Ropsten testnet](https://github.com/second-state/interest-earner-smart-contract/blob/main/README.md#setting-up-ropsten-testnet) below if you need help setting up a testnet environment.
 
 **This approval step is actually performed by the DApp's User Interface (UI).** The DApp will first check the `approval` relationship of the Interest Earner Smart Contract's deployment address and the user (`msg.sender`) and then present the user with an offer to approve a MetaMask transaction (in the event that the `approve` function needs to be actioned before the DApp can successfully proceed with the task of transferring the suggested amount of tokens from the ERC20 contract to the Staking contract). Once this back and forth has occured, the DApp will know that it is possible to proceed and will get on with the staking (as outlined in the step following this one)
 
@@ -143,3 +143,4 @@ Open [Remix](https://remix.ethereum.org/) and select the "Injected Web3" option 
 You can now go ahead and compile, deploy, configure and interact directly with the contract.
 
 
+---
