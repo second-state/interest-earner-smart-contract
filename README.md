@@ -162,15 +162,33 @@ Simulate that same user staking again (still at 10%), only this time, with appro
 
 If we look at the state of the Ropsten testnet at block [12075020](https://ropsten.etherscan.io/block/12075020) via the interest earner's user interface, we can see the state of the reserve pool (and make a decision on if it needs to be topped up by the contract owner).
 
+<img width="412" alt="Screen Shot 2022-03-12 at 2 40 14 pm" src="https://user-images.githubusercontent.com/9831342/158003948-8f38c89f-caee-4837-850a-472c1771f97d.png">
 
+We can see here that:
+- reserve pool = 50, 100
+- total staked = 50, 000
+- total expected interest = 95.8904109589035456
+
+If we add total staked and total expected interest (`50, 000 + 95.8904109589035456`) we get `50095.8904109589035456`. 
+
+If we subtract that amount from the reserve pool (`50100 - (50, 000 + 95.8904109589035456)') we get `4.1095890410964544`
+
+This means that there is only `4.1` STATE tokens available for incoming staking users to earn interest.
+
+If the user was to attempt to stake an additional `1, 000 tokens` the following would happen.
+
+`10, 000` * `0.10` = `1, 000` (1, 000 is 10 percent of 10, 000)
+(`1, 000` / `365` days) * `6` approximate remaining days = `16.4` (`16.4` is the interest which the user will earn at 10% during the approximate 6 day period remaining).
+
+We can see that there are only `4.1` in the reserve pool so this transaction would revert and the user would not be able to stake.
+
+<img width="763" alt="Screen Shot 2022-03-12 at 2 49 07 pm" src="https://user-images.githubusercontent.com/9831342/158004161-48b8588d-35a9-4bbd-80ec-a9e6250477f9.png">
 
 First, **as the owner**, we have to send some STATE to the reserve pool so that the contract is able to pay any upcoming staking users. The contract will not let a user stake if the reserve pool can not pay out the principle and interest of the entire staking/un-staking rund trip for the term.
 
 We transfer `100` STATE from the owner's address to the contract's address. **Note: nobody except for the interest earner contract instance owner should EVER send STATE directly to the contract address EVER.**
 
-We transferred `100` STATE because the predicted interest will be `95.89041` i.e. 
-`50, 000` * `0.10` = `5, 000` (5, 000 is 10 percent of 50, 000)
-(`5, 000` / `365` days) * `7` days = `95.89041` (`95.89041` is the interest which the user will earn at 10% during the 7 day period).
+
 
 ---
 
