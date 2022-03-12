@@ -212,9 +212,8 @@ contract InterestEarner {
         // Let's calculate the release date
         uint256 releaseEpoch = initialStakingTimestamp[msg.sender].add(timePeriod);
         // Let's fragment the interest earned per annum down to the remaining time left on this staking round
+        require(releaseEpoch.sub(block.timestamp) > 0, "There is not enough time left to stake for this current round, please un-stake first");
         uint256 secondsRemaining = releaseEpoch.sub(block.timestamp);
-        // We must ensure that there is a quantifiable amount of time remaining (so we can calculate some interest; albeit proportional)
-        require(secondsRemaining > 0, "There is not enough time left to stake for this current round");
         // There are 31536000 seconds per annum, so let's calculate the interest for this remaining time period
         uint256 interestEarnedForThisStake = weiPerSecond.mul(secondsRemaining);
         // Make sure that contract's reserve pool has enough to service this transaction. I.e. there is enough STATE in this contract to pay this user's interest (not including/counting any previous end user's staked STATE or interest which they will eventually take as a pay out)
