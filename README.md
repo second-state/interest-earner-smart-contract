@@ -206,15 +206,21 @@ Now let's just try and remove one Wei less than what is spare/unallocated i.e. `
 
 That worked, and now we can see in the admin portal that the reserve pool number is colored red to signify that the tolerance of 1 token has been met. This is a warning so that the contract owner knows that the reserve pool is running very low.
 
+<img width="407" alt="Screen Shot 2022-03-12 at 3 27 25 pm" src="https://user-images.githubusercontent.com/9831342/158005497-f1a94f17-45c3-426e-98c0-ce48d5a4e3f7.png">
+
 ---
 
-Back to the second staking
+Back to the second staking from the previous section.
 
-First, **as the owner**, we have to send some STATE to the reserve pool so that the contract is able to pay any upcoming staking users. The contract will not let a user stake if the reserve pool can not pay out the principle and interest of the entire staking/un-staking round trip for the term.
+Note, for this documentation **as the owner**, we have already sent some STATE to the reserve pool so that the contract is able to pay this upcoming staking user.
 
-We transfer `100` STATE from the owner's address to the contract's address. **Note: nobody except for the interest earner contract instance owner should EVER send STATE directly to the contract address.**
+We stake the additional 10, 000 STATE (at 10%) with approx 6 days to go, via the UI, as shown below.
 
+<img width="395" alt="Screen Shot 2022-03-12 at 3 51 32 pm" src="https://user-images.githubusercontent.com/9831342/158005860-1084491d-86d3-461f-8dc6-9ca7a54d5d84.png">
 
+We return to the home screen of the UI and see the following updated statistics.
+
+<img width="408" alt="Screen Shot 2022-03-12 at 3 49 22 pm" src="https://user-images.githubusercontent.com/9831342/158005818-7c430606-323a-4134-9158-7e12979af4e8.png">
 
 ---
 
