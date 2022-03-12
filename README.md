@@ -156,6 +156,22 @@ We can see that the `balances` for just that user is `50000000000000000000000` W
 
 <img width="281" alt="Screen Shot 2022-03-11 at 4 55 13 pm" src="https://user-images.githubusercontent.com/9831342/157819903-beff7b8a-1914-45d5-95b5-90993353a886.png">
 
+### Simulate that same user staking again 
+
+Simulate that same user staking again (still at 10%), only this time, with approx 6 days remaining in the term.
+
+If we look at the state of the Ropsten testnet at block [12075020](https://ropsten.etherscan.io/block/12075020) via the interest earner's user interface, we can see the state of the reserve pool (and make a decision on if it needs to be topped up by the contract owner).
+
+
+
+First, **as the owner**, we have to send some STATE to the reserve pool so that the contract is able to pay any upcoming staking users. The contract will not let a user stake if the reserve pool can not pay out the principle and interest of the entire staking/un-staking rund trip for the term.
+
+We transfer `100` STATE from the owner's address to the contract's address. **Note: nobody except for the interest earner contract instance owner should EVER send STATE directly to the contract address EVER.**
+
+We transferred `100` STATE because the predicted interest will be `95.89041` i.e. 
+`50, 000` * `0.10` = `5, 000` (5, 000 is 10 percent of 50, 000)
+(`5, 000` / `365` days) * `7` days = `95.89041` (`95.89041` is the interest which the user will earn at 10% during the 7 day period).
+
 ---
 
 ## Setting up Ropsten Testnet
