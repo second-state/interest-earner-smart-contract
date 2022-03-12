@@ -171,7 +171,7 @@ We can see here that:
 
 If we add total staked and total expected interest (`50, 000 + 95.8904109589035456`) we get `50095.8904109589035456`. 
 
-If we subtract that amount from the reserve pool (`50100 - (50, 000 + 95.8904109589035456)') we get `4.1095890410964544` (4109589041096454400 in Wei)
+If we subtract that amount from the reserve pool (`50100 - (50, 000 + 95.8904109589035456)`) we get `4.1095890410964544` (4109589041096454400 in Wei)
 
 This means that there is only `4.1` spare/unallocated STATE tokens available for new incoming staking users to earn interest.
 
