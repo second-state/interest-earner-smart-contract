@@ -171,9 +171,9 @@ We can see here that:
 
 If we add total staked and total expected interest (`50, 000 + 95.8904109589035456`) we get `50095.8904109589035456`. 
 
-If we subtract that amount from the reserve pool (`50100 - (50, 000 + 95.8904109589035456)') we get `4.1095890410964544`
+If we subtract that amount from the reserve pool (`50100 - (50, 000 + 95.8904109589035456)') we get `4.1095890410964544` (4109589041096454400 in Wei)
 
-This means that there is only `4.1` STATE tokens available for incoming staking users to earn interest.
+This means that there is only `4.1` spare/unallocated STATE tokens available for new incoming staking users to earn interest.
 
 If the user was to attempt to stake an additional `1, 000 tokens` the following would happen.
 
@@ -184,9 +184,35 @@ We can see that there are only `4.1` in the reserve pool so this transaction wou
 
 <img width="763" alt="Screen Shot 2022-03-12 at 2 49 07 pm" src="https://user-images.githubusercontent.com/9831342/158004161-48b8588d-35a9-4bbd-80ec-a9e6250477f9.png">
 
-First, **as the owner**, we have to send some STATE to the reserve pool so that the contract is able to pay any upcoming staking users. The contract will not let a user stake if the reserve pool can not pay out the principle and interest of the entire staking/un-staking rund trip for the term.
+---
 
-We transfer `100` STATE from the owner's address to the contract's address. **Note: nobody except for the interest earner contract instance owner should EVER send STATE directly to the contract address EVER.**
+### Testing removing extra STATE from the reserve pool
+
+This is a great opportunity to test the functionality of the `transferTokensOutOfReservePool`. 
+
+Background: As part of normal operation **the owner** of this contract sends STATE to this contract to facilitate earnings, the owner is also able to remove any STATE tokens which are not already allocated to a user (in terms of both principle and interest). Using the calculations above, we can see that we have 4109589041096454400 Wei which is spare/unallocated.
+
+If we try to remove even one more Wei than that amount, the contract will revert (this means that user funds are maintained by the contract and can't be removed by anyone but them). Let's try removing `4109589041096454400 + 1` i.e. `4109589041096454401` to prove this.
+
+<img width="278" alt="Screen Shot 2022-03-12 at 3 01 55 pm" src="https://user-images.githubusercontent.com/9831342/158004740-ce20ec74-d072-4bc8-aba1-7844f1cd6e35.png">
+
+The above request produces the following revert error.
+
+<img width="496" alt="Screen Shot 2022-03-12 at 3 02 02 pm" src="https://user-images.githubusercontent.com/9831342/158004747-f2305bfb-3fbc-437f-91fc-9b8a4bf491a1.png">
+
+Now let's just try and remove one Wei less than what is spare/unallocated i.e. `4109589041096454400` - `1` = `4109589041096454399` (equivalent to `4.109589041096454399` STATE)
+
+<img width="273" alt="Screen Shot 2022-03-12 at 3 28 36 pm" src="https://user-images.githubusercontent.com/9831342/158005194-33b41e84-28cd-4cde-8010-ef64a561c768.png">
+
+That worked, and now we can see in the admin portal that the reserve pool number is colored red to signify that the tolerance of 1 token has been met. This is a warning so that the contract owner knows that the reserve pool is running very low.
+
+---
+
+Back to the second staking
+
+First, **as the owner**, we have to send some STATE to the reserve pool so that the contract is able to pay any upcoming staking users. The contract will not let a user stake if the reserve pool can not pay out the principle and interest of the entire staking/un-staking round trip for the term.
+
+We transfer `100` STATE from the owner's address to the contract's address. **Note: nobody except for the interest earner contract instance owner should EVER send STATE directly to the contract address.**
 
 
 
@@ -224,4 +250,6 @@ You can now go ahead and compile, deploy, configure and interact directly with t
 - [x] the owner can not call the set percentage more than once
 - [x] the owner can not call the set time period more than once
 - [x] a user can not stake tokens if there is no STATE in the reserve pool
-
+- [x] a user can not stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
+- [x] the owner can remove spare STATE from the reserve pool only (actual reserve pool - 1 Wei)
+- [ ] 
