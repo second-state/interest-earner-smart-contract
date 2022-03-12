@@ -1,14 +1,23 @@
 // SPDX-License-Identifier: MIT
-// IF YOU ARE NOT THE OWNER, DO NOT SEND TOKENS DIRECTLY TO THIS CONTRACT - ONLY USE THIS CONTRACT THROUGH THE INTERFACE (source: https://github.com/second-state/interest-earner-user-interface)
-// DO NOT SEND ETH TO THIS CONTRACT
 
-// WARNING this contract has NOT been independently tested or audited
-// DO NOT use this contract with funds of real value until officially tested and audited by an independent expert or group
+// USAGE
+// IF YOU ARE NOT THE OWNER OF THIS CONTRACT INSTANCE, DO NOT SEND TOKENS DIRECTLY TO THIS CONTRACT.
+// IF YOU ARE AN END USER, ONLY USE THIS CONTRACT THROUGH THE INTERFACE (available at https://github.com/second-state/interest-earner-user-interface).
+// DO NOT SEND ETH TO THIS CONTRACT.
+
+// WARNING 
+// This contract has NOT been independently tested or audited.
+// DO NOT use this contract with funds of real value until officially tested and audited by an independent expert or group.
 
 pragma solidity 0.8.11;
 
+// SafeERC20
+// The following version of SafeERC20 is used.
+// https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/utils/SafeERC20.sol
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-
+// SafeMath
+// The following version of SafeMath is used because this contract uses Solidity 0.8 or later (i.e. the compiler has built in overflow checks).
+// https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/math/SafeMath.sol
 import "openzeppelin-solidity/contracts/utils/math/SafeMath.sol";
 
 contract InterestEarner {
@@ -113,7 +122,6 @@ contract InterestEarner {
         _;
     }
 
-
     // Modifier
     /**
      * @dev Throws if time percentageBasisPoints already set.
@@ -131,6 +139,7 @@ contract InterestEarner {
         require(percentageSet == true, "Please set the percentageBasisPoints variable first, then try again.");
         _;
     }
+    
     /// @dev Sets the staking period for this specific contract instance (in seconds) i.e. 3600 = 1 hour
     /// @param _timePeriodInSeconds is the amount of seconds which the contract will add to the a user's initialStakingTimestamp mapping, each time a user initiates a staking action
     function setTimePeriod(uint256 _timePeriodInSeconds) public onlyOwner timePeriodNotSet  {
