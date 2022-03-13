@@ -78,12 +78,12 @@
 | percentageBasisPoints               | 1000         |
 
 
-- the `initialStakingTimestamp[msg.sender]` must not be zero i.e. there must be tokens staked [x]
-- the `block.timestamp` must be greater than the initialStakingTimestamp[msg.sender] and the timePeriod of the term in play (term must be over already) i.e. `1647143500 > 1647143446` must be true [x]
-- the token address passed in to the function must be the same as the official ERC20 which is being staked here [x]
-- the expectedInterest[msg.sender] alread owed to this user plus the balance currently staked by this user must be less than or equal to the amount available in the reserve pool i.e. `(400000000000 + 400000) < 800000000000` [x]
-- the new amount to invest is the sum of the principle and interest owned to this `msg.sender` i.e. `400000400000` [x]
-- the new amount must qualify in terms of min and max allowable values i.e. `400000400000 > 315360000000` and `400000400000 < 2**256 - 1` [x]
+- the `initialStakingTimestamp[msg.sender]` must not be zero i.e. there must be tokens staked ✅
+- the `block.timestamp` must be greater than the initialStakingTimestamp[msg.sender] and the timePeriod of the term in play (term must be over already) i.e. `1647143500 > 1647143446` must be true ✅
+- the token address passed in to the function must be the same as the official ERC20 which is being staked here ✅
+- the expectedInterest[msg.sender] alread owed to this user plus the balance currently staked by this user must be less than or equal to the amount available in the reserve pool i.e. `(400000000000 + 400000) < 800000000000` ✅
+- the new amount to invest is the sum of the principle and interest owned to this `msg.sender` i.e. `400000400000` ✅
+- the new amount must qualify in terms of min and max allowable values i.e. `400000400000 > 315360000000` and `400000400000 < 2**256 - 1` ✅
 - tokens are released in terms of emitting an event log only
 
 **DATA example update**
@@ -106,19 +106,19 @@
 | percentageBasisPoints               | 1000         |
 
 
-- tokens already in the `msg.sender`'s balance can stay there, the `expectedInterest[msg.sender]` is appended to the aforementioned balance [x]
-- `totalStateStaked` is then incremented with interest earned (which is now being reinvested as STATE) [x]
-- `totalExpectedInterest` is then decremented with same amount as in previous step [x]
-- an event is emitted to show interest has been withdrawn [x]
-- now the `expectedInterest[msg.sender]` for `msg.sender` is set back to zero value [x]
-- now there is a new term kicking off so `initialStakingTimestamp[msg.sender]` is now set to `block.timestamp` [x]
-- a interestEarnedPerAnnum_pre calculation is performed `400000400000 * 1000 = 400000400000000` [x]
-- a interestEarnedPerAnnum_post calculation is performed `400000400000000 / 10000 = 40000040000` [x]
-- the amount of wei per second is now calculated `40000040000 / 31536000 = 1268` [x]
-- requirement that wei per second is greater than zero [x]
-- a `releaseEpoch` is calculated i.e. `initialStakingTimestamp[msg.sender]` plus `timePeriod` which equals `1647229900` which is one day in the future [x]
-- the `secondsRemaining` is calculated next i.e. `releaseEpoch` - `block.timestamp` which at this present time is `86400` [x] (we are at the full term point)
-- requirement that the `secondsRemaining` is a number greater than zero [x]
+- tokens already in the `msg.sender`'s balance can stay there, the `expectedInterest[msg.sender]` is appended to the aforementioned balance ✅
+- `totalStateStaked` is then incremented with interest earned (which is now being reinvested as STATE) ✅
+- `totalExpectedInterest` is then decremented with same amount as in previous step ✅
+- an event is emitted to show interest has been withdrawn ✅
+- now the `expectedInterest[msg.sender]` for `msg.sender` is set back to zero value ✅
+- now there is a new term kicking off so `initialStakingTimestamp[msg.sender]` is now set to `block.timestamp` ✅
+- a interestEarnedPerAnnum_pre calculation is performed `400000400000 * 1000 = 400000400000000` ✅
+- a interestEarnedPerAnnum_post calculation is performed `400000400000000 / 10000 = 40000040000` ✅
+- the amount of wei per second is now calculated `40000040000 / 31536000 = 1268` ✅
+- requirement that wei per second is greater than zero ✅
+- a `releaseEpoch` is calculated i.e. `initialStakingTimestamp[msg.sender]` plus `timePeriod` which equals `1647229900` which is one day in the future ✅
+- the `secondsRemaining` is calculated next i.e. `releaseEpoch` - `block.timestamp` which at this present time is `86400` ✅ (we are at the full term point)
+- requirement that the `secondsRemaining` is a number greater than zero ✅
 
 | Variable                            | Data         |
 |-------------------------------------|--------------|
@@ -138,8 +138,8 @@
 | percentageBasisPoints               | 1000         |
 
 
-- now the interest earned for this re-stake is calculated `interestEarnedForThisStake = weiPerSecond.mul(secondsRemaining)` i.e. `1268 * 86400 = 109555200` [x]
-- using the new data below, we satisfy the requirement that `token.balanceOf(address(this)) >= totalStateStaked.add(totalExpectedInterest).add(interestEarnedForThisStake)` i.e. `800000000000 >= 400000400000 + 0 + 109555200` which is correct [x]
+- now the interest earned for this re-stake is calculated `interestEarnedForThisStake = weiPerSecond.mul(secondsRemaining)` i.e. `1268 * 86400 = 109555200` ✅
+- using the new data below, we satisfy the requirement that `token.balanceOf(address(this)) >= totalStateStaked.add(totalExpectedInterest).add(interestEarnedForThisStake)` i.e. `800000000000 >= 400000400000 + 0 + 109555200` which is correct ✅
 
 **DATA example update**
 
@@ -160,10 +160,10 @@
 | token.balanceOf(address(this))      | 800000000000 |
 | percentageBasisPoints               | 1000         |
 
-- now the `totalExpectedInterest` is increased to show this new interest being earned i.e.`totalExpectedInterest + interestEarnedForThisStake` [x]
-- also now allocate the `expectedInterest[msg.sender]` i.e. `expectedInterest[msg.sender] + interestEarnedForThisStake` [x]
-- an event is emitted to log `TokensStaked(msg.sender, newAmountToInvest)` [x]
-- an event is emitted to log `InterestEarned(msg.sender, interestEarnedForThisStake)` [x]
+- now the `totalExpectedInterest` is increased to show this new interest being earned i.e.`totalExpectedInterest + interestEarnedForThisStake` ✅
+- also now allocate the `expectedInterest[msg.sender]` i.e. `expectedInterest[msg.sender] + interestEarnedForThisStake` ✅
+- an event is emitted to log `TokensStaked(msg.sender, newAmountToInvest)` ✅
+- an event is emitted to log `InterestEarned(msg.sender, interestEarnedForThisStake)` ✅
 
 **DATA example final**
 
