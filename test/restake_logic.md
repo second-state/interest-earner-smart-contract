@@ -3,6 +3,10 @@
 ## Source code
 
 ```javascript
+    // SPDX-License-Identifier: MIT
+    // WARNING this contract has not been independently tested or audited
+    // DO NOT use this contract with funds of real value until officially tested and audited by an independent expert or group
+
     /// @dev Allows user to unstake tokens and withdraw their interest after the correct time period has elapsed and then reinvest automatically.
     /// @param token - address of the official ERC20 token which is being unlocked here.
     /// Reinvests all principle and all interest earned during the most recent term
@@ -58,6 +62,9 @@
 ```
 
 ## Logic with data example
+
+Time period is one day
+Simple annual interest is 10%
 
 **DATA example**
 | Variable                            | Data         |
