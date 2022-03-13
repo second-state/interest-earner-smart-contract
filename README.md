@@ -246,16 +246,3 @@ Open [Remix](https://remix.ethereum.org/) and select the "Injected Web3" option 
 
 You can now go ahead and compile, deploy, configure and interact directly with the contract.
 
-
----
-
-## Additional manual checks performed
-
-- [x] only owner can call set percentage 
-- [x] only owner can call set time period
-- [x] the owner can not call the set percentage more than once
-- [x] the owner can not call the set time period more than once
-- [x] a user can not stake tokens if there is no STATE in the reserve pool
-- [x] a user can not stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
-- [x] the owner can remove spare STATE from the reserve pool only (actual reserve pool - 1 Wei)
-- [ ] 

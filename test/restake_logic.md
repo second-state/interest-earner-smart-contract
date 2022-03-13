@@ -84,7 +84,7 @@
 - the expectedInterest[msg.sender] alread owed to this user plus the balance currently staked by this user must be less than or equal to the amount available in the reserve pool i.e. `(400000000000 + 400000) < 800000000000` ✅
 - the new amount to invest is the sum of the principle and interest owned to this `msg.sender` i.e. `400000400000` ✅
 - the new amount must qualify in terms of min and max allowable values i.e. `400000400000 > 315360000000` and `400000400000 < 2**256 - 1` ✅
-- tokens are released in terms of emitting an event log only
+- tokens are released in terms of emitting an event log only ✅
 
 **DATA example update**
 

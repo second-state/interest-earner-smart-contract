@@ -36,7 +36,7 @@ All user statistics
 
 #### Third stake
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
+- Timestamp: 1647068692
 - Date GMT: Mar-12-2022 07:04:52 AM +UTC
 - Amount: 1000 STATE
 - Transaction: 0x049955360409a8cdc50188e745aca6a7193947161a26bdf337de0d518736665b 
@@ -47,4 +47,106 @@ As this third stake is made at a similar time of day (this time with 6 whole day
 `(((1.641736428208793488 * 50) / 6) * 7) = 95.76795831217962`
 
 This shows that the incremental staking (at a different time with a different amount) is accurate. When normalized they are both 95 STATE.
+
+#### Un stake
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount un-staked: 
+- Transaction:  
+- Interest withdrawn: 
+
+#### Correctness
+Given the above data does this appear to be operating correctly?
+
+- [ ] Yes
+- [ ] No
+
+
+## Test staking schedule 2
+- 1 Day @ 10% simple interest per annum
+
+## Contract addresses
+- Test interest earner address on the Ropsten network: 
+- Test ERC20 contract address on the Ropsten network : 
+
+## Users
+All user statistics
+
+### User A
+- Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Expected interest to date: 
+- Total Staked to date:
+- Principle withdrawn: 
+- Interest withdrawn: 
+- Correct?: 
+
+#### First stake - on day 1
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount: 
+- Transaction: 
+- Expected Interest: 
+
+#### Second stake - on day 1
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount: 
+- Transaction: 
+- Expected Interest: 
+
+#### Third stake - on day 1
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount: 
+- Transaction:  
+- Expected Interest: 
+
+#### First RE stake - on day 2 (after initial staking term has expired)
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount: 
+- Transaction:  
+- Expected Interest: 
+
+#### Second RE stake - on day 3 (after first re-stake term has expired)
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount: 
+- Transaction:  
+- Expected Interest: 
+
+#### Un stake - on day 4 (after second re-stake term has expired)
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount un-staked: 
+- Transaction:  
+- Interest withdrawn: 
+
+#### Correctness
+Given the above data does this appear to be operating correctly?
+
+- [ ] Yes
+- [ ] No
+
+---
+
+## Additional manual checks performed
+
+- [x] only owner can call set percentage 
+- [x] only owner can call set time period
+- [x] the owner can not call the set percentage more than once
+- [x] the owner can not call the set time period more than once
+- [ ] a user can not stake tokens if there is no STATE in the reserve pool
+- [ ] a user can not stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
+- [ ] a user can not RE stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
+- [ ] the owner can remove spare STATE from the reserve pool only (actual exact amount of reserve pool which is not allocated to a user)
+- [ ] a user can not un stake tokens whilst the term is still in play
+- [ ] a user can not RE stake tokens whilst the term is still in play
 
