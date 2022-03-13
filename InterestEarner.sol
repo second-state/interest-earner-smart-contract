@@ -195,7 +195,7 @@ contract InterestEarner {
         // Therefore, in terms of minimum allowable value, we need the staked amount to always be greater than 0.00000031536 ETH
         // Having this minimum amount will avoid us having any zero values in our calculations (anything multiplied by zero is zero; must avoid this at all costs)
         // This is fair enough given that this approach allows us to calculate interest down to 0.01% increments with minimal rounding adjustments
-        require(amount >= 315360000000, "Amount to stake must be greater than 0.00000031536 ETH");
+        require(amount > 315360000000, "Amount to stake must be greater than 0.00000031536 ETH");
         // Similarly, in terms of maximum allowable value, we need the staked amount to be less than 2**256 - 1 / 10, 000 (to avoid overflow)
         require(amount < MAX_INT.div(10000) , "Maximum amount must be smaller, please try again");
         // If this is the first time an external account address is staking, then we need to set the initial staking timestamp to the currently block's timestamp
@@ -273,17 +273,6 @@ contract InterestEarner {
             // Emit the event log
             emit InterestWithdrawn(msg.sender, interestToPayOut);
         }
-    }
-
-    /// @dev Transfer accidentally locked ERC20 tokens.
-    /// @param token - ERC20 token address.
-    /// @param amount of ERC20 tokens to remove.
-    function transferAccidentallyLockedTokens(IERC20 token, uint256 amount) public onlyOwner noReentrant {
-        require(address(token) != address(0), "Token address can not be zero");
-        // This function can not access the official timelocked tokens; just other random ERC20 tokens that may have been accidently sent here
-        require(token != erc20Contract, "Token address can not be ERC20 address which was passed into the constructor");
-        // Transfer the amount of the specified ERC20 tokens, to the owner of this contract
-        token.safeTransfer(owner, amount);
     }
 
     /// @dev Transfer tokens out of the reserve pool (back to owner)
