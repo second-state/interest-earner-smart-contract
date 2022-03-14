@@ -256,23 +256,15 @@ contract InterestEarner {
         balances[msg.sender] = balances[msg.sender].sub(amountToUnstake);
         // Reset the initialStakingTimestamp[msg.sender] in preparation for future rounds of interest earning from the specific user
         initialStakingTimestamp[msg.sender] = 0;
-        // Transfer staked tokens back to user's wallet
-        token.safeTransfer(msg.sender, amountToUnstake);
+        // Reduce the value which represents interest owed to the msg.sender
+        expectedInterest[msg.sender] = expectedInterest[msg.sender].sub(interestToPayOut);
+        // Reduce the total amount of interest owed by this contract (to all of its users) using the appropriate amount
+        totalExpectedInterest = totalExpectedInterest.sub(interestToPayOut);
+        // Transfer staked tokens (principle) and the interest back to user's wallet
+        token.safeTransfer(msg.sender, interestToPayOut.add(amountToUnstake));
         // Emit the event log
         emit TokensUnstaked(msg.sender, amountToUnstake);
-        // Finally, perform interest withdrawl tasks if required
-        if(interestToPayOut > 0){
-            // Make sure that this transaction will revert if there is a discrepancy in the expected interest values which are held within this contract
-            require(totalExpectedInterest >= interestToPayOut);
-            // Reduce the value which represents interest owed to the msg.sender
-            expectedInterest[msg.sender] = expectedInterest[msg.sender].sub(interestToPayOut);
-            // Reduce the total amount of interest owed by this contract (to all of its users) using the appropriate amount
-            totalExpectedInterest = totalExpectedInterest.sub(interestToPayOut);
-            // Transfer interest earned during the time period, into the user's wallet
-            token.safeTransfer(msg.sender, interestToPayOut);
-            // Emit the event log
-            emit InterestWithdrawn(msg.sender, interestToPayOut);
-        }
+        emit InterestWithdrawn(msg.sender, interestToPayOut);
     }
 
     /// @dev Transfer tokens out of the reserve pool (back to owner)
