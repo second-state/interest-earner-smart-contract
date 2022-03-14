@@ -3,6 +3,13 @@
 ## Test staking schedule 1
 - 7 Days @ 10% simple interest per annum
 
+**Current situation**
+
+This contract will still be tested to completion, even though there have been slight code changes and future tests over and above this one.
+At present waiting on withdraw tokens from reserve pool so that the tokens can be used in other tests
+Tx is pending: 0xfa9f281f2e573127f6f78a1b6532608d452910c5f14ec86b5a6eff853311a0c6
+Check back later to continue
+
 ## Contract addresses
 - Test interest earner address on the Ropsten network: `0xa45985abdFA5Ca853104Fb9104Dd8C4D75Cc2Ea2`
 - Test ERC20 contract address on the Ropsten network : `0xC9A46174D2dE2c5DA9DaD1226F58BdA9a0698Ba1`
@@ -67,7 +74,11 @@ Given the above data does this appear to be operating correctly?
 # Code update after this point (`unstakeAllTokensAndWithdrawInterestEarned` function only)
 
 ## Test staking schedule 2
-- 1 hour @ 10% simple interest per annum
+- 1 hour @ 50% simple interest per annum
+
+**Current situation**
+Waiting on deployment at tx 0xf210ffb3582638eb62848cb2cf5d7ae52e5f220dfafaf2dd33509e88523368c0
+Ropsten very slow at present
 
 ## Contract addresses
 - Test interest earner address on the Ropsten network: 
@@ -125,10 +136,15 @@ Given the above data does this appear to be operating correctly?
 ---
 
 ## Test staking schedule 3
-- 1 day @ 10% simple interest per annum
+- 3 day @ 10% simple interest per annum
+
+**Current situation**
+
+Waiting on set percentage (timestamp is already set) at tx 0x22b011e5530efe642df275545669068c65acf9746e541c2ab227fb2d628e847e
+Ropsten very slow at present
 
 ## Contract addresses
-- Test interest earner address on the Ropsten network: 
+- Test interest earner address on the Ropsten network: `0xCf5A95A9D502DF563446eD89080c274a036cEC43`
 - Test ERC20 contract address on the Ropsten network : `0xC9A46174D2dE2c5DA9DaD1226F58BdA9a0698Ba1`
 
 ## Users
@@ -256,4 +272,16 @@ Given the above data does this appear to be operating correctly?
 
 ---
 
+## Additional manual checks performed
+
+- [x] only owner can call set percentage 
+- [x] only owner can call set time period
+- [x] the owner can not call the set percentage more than once
+- [x] the owner can not call the set time period more than once
+- [ ] a user can not stake tokens if there is no STATE in the reserve pool
+- [ ] a user can not stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
+- [ ] a user can not RE stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
+- [ ] the owner can remove spare STATE from the reserve pool only (actual exact amount of reserve pool which is not allocated to a user)
+- [ ] a user can not un stake tokens whilst the term is still in play
+- [ ] a user can not RE stake tokens whilst the term is still in play
 
