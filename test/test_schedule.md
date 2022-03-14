@@ -62,8 +62,127 @@ Given the above data does this appear to be operating correctly?
 - [ ] Yes
 - [ ] No
 
+---
+
+# Code update after this point (`unstakeAllTokensAndWithdrawInterestEarned` function only)
 
 ## Test staking schedule 2
+- 1 hour @ 10% simple interest per annum
+
+## Contract addresses
+- Test interest earner address on the Ropsten network: 
+- Test ERC20 contract address on the Ropsten network : `0xC9A46174D2dE2c5DA9DaD1226F58BdA9a0698Ba1`
+
+## Users
+All user statistics
+
+### User A
+- Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Expected interest to date: 
+- Total Staked to date:
+- Principle withdrawn: 
+- Interest withdrawn: 
+- Correct?: 
+
+#### First stake - on day 1
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount: 
+- Transaction: 
+- Expected Interest: 
+
+#### Second stake - on day 1
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount: 
+- Transaction: 
+- Expected Interest: 
+
+#### Third stake - on day 1
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount: 
+- Transaction:  
+- Expected Interest: 
+
+#### Un stake
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount un-staked: 
+- Transaction:  
+- Interest withdrawn: 
+
+#### Correctness
+Given the above data does this appear to be operating correctly?
+
+- [ ] Yes
+- [ ] No
+
+---
+
+## Test staking schedule 3
+- 1 day @ 10% simple interest per annum
+
+## Contract addresses
+- Test interest earner address on the Ropsten network: 
+- Test ERC20 contract address on the Ropsten network : `0xC9A46174D2dE2c5DA9DaD1226F58BdA9a0698Ba1`
+
+## Users
+All user statistics
+
+### User A
+- Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Expected interest to date: 
+- Total Staked to date:
+- Principle withdrawn: 
+- Interest withdrawn: 
+- Correct?: 
+
+#### First stake - on day 1
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount: 
+- Transaction: 
+- Expected Interest: 
+
+#### Second stake - on day 1
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount: 
+- Transaction: 
+- Expected Interest: 
+
+#### Third stake - on day 1
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount: 
+- Transaction:  
+- Expected Interest: 
+
+#### Un stake
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount un-staked: 
+- Transaction:  
+- Interest withdrawn: 
+
+#### Correctness
+Given the above data does this appear to be operating correctly?
+
+- [ ] Yes
+- [ ] No
+
+---
+
+## Test staking schedule 3 - with RE-staking (optional for future release)
 - 1 Day @ 10% simple interest per annum
 
 ## Contract addresses
@@ -137,16 +256,4 @@ Given the above data does this appear to be operating correctly?
 
 ---
 
-## Additional manual checks performed
-
-- [x] only owner can call set percentage 
-- [x] only owner can call set time period
-- [x] the owner can not call the set percentage more than once
-- [x] the owner can not call the set time period more than once
-- [ ] a user can not stake tokens if there is no STATE in the reserve pool
-- [ ] a user can not stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
-- [ ] a user can not RE stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
-- [ ] the owner can remove spare STATE from the reserve pool only (actual exact amount of reserve pool which is not allocated to a user)
-- [ ] a user can not un stake tokens whilst the term is still in play
-- [ ] a user can not RE stake tokens whilst the term is still in play
 
