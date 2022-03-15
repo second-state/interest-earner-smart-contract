@@ -77,11 +77,12 @@ Given the above data does this appear to be operating correctly?
 - 1 hour @ 50% simple interest per annum
 
 **Current situation**
-Waiting on deployment at tx 0xf210ffb3582638eb62848cb2cf5d7ae52e5f220dfafaf2dd33509e88523368c0
-Ropsten very slow at present
+Contract eventually deployed on Ropsten
+Time period set is pending at https://ropsten.etherscan.io/tx/0x37d6e06c6a394d9eb77f434c1ebb4acd5eb02c4301d71539298bf0733c26b9fa
+Percentage set is pending at https://ropsten.etherscan.io/tx/0xc021b045e9145f19d6a71eedc2d161ed0332fb8870b93dd35bb2c0a3b5688421
 
 ## Contract addresses
-- Test interest earner address on the Ropsten network: 
+- Test interest earner address on the Ropsten network: `0x2f13511dbd9090bc687440d924111c3f880b97e9`
 - Test ERC20 contract address on the Ropsten network : `0xC9A46174D2dE2c5DA9DaD1226F58BdA9a0698Ba1`
 
 ## Users
@@ -139,9 +140,8 @@ Given the above data does this appear to be operating correctly?
 - 3 day @ 10% simple interest per annum
 
 **Current situation**
+Midway in staking 10000, the approval is pending tx at https://ropsten.etherscan.io/tx/0xc5b87669c9472f5e3194d81cfa45076e978ca8ecfe89b92db586e1e4ea238744
 
-Waiting on set percentage (timestamp is already set) at tx 0x22b011e5530efe642df275545669068c65acf9746e541c2ab227fb2d628e847e
-Ropsten very slow at present
 
 ## Contract addresses
 - Test interest earner address on the Ropsten network: `0xCf5A95A9D502DF563446eD89080c274a036cEC43`
@@ -153,12 +153,25 @@ All user statistics
 ### User A
 - Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
 - Expected interest to date: 
-- Total Staked to date:
+- Total Staked to date: 
 - Principle withdrawn: 
 - Interest withdrawn: 
 - Correct?: 
 
 #### First stake - on day 1
+
+Confirm no staking because reserve pool is empty
+
+x
+
+Confirm that no staking because reserve pool has some, but not enough; estimate staking 10, 000 tokens for 3 days at 10% will earn 8.2 tokens interest
+`((10000 * 0.1)/365) * 3 = 8.21917808219`
+
+After [sending additional 10 tokens](https://ropsten.etherscan.io/tx/0xf3f03b80791da6c0c993f99e15ec3d133b3457796d10c20f31b694c7e61e10b1) (making 11 in the reserve pool total) from the owner to the contract the following can go ahead.
+
+First the user approves the spend
+
+
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
 - Timestamp: 
 - Date GMT: 
@@ -278,7 +291,7 @@ Given the above data does this appear to be operating correctly?
 - [x] only owner can call set time period
 - [x] the owner can not call the set percentage more than once
 - [x] the owner can not call the set time period more than once
-- [ ] a user can not stake tokens if there is no STATE in the reserve pool
+- [x] a user can not stake tokens if there is no STATE in the reserve pool
 - [ ] a user can not stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
 - [ ] a user can not RE stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
 - [ ] the owner can remove spare STATE from the reserve pool only (actual exact amount of reserve pool which is not allocated to a user)
