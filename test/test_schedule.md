@@ -160,24 +160,78 @@ All user statistics
 
 #### First stake - on day 1
 
+Starting out with newly deployed contract; reserve pool is emplty.
+
+![Screen Shot 2022-03-15 at 10 24 36 am](https://user-images.githubusercontent.com/9831342/158287343-62ecb820-a140-4119-b42d-99be62152968.png)
+
 Confirm no staking because reserve pool is empty
 
-x
+![Screen Shot 2022-03-15 at 10 48 56 am](https://user-images.githubusercontent.com/9831342/158287318-59ee1e37-4c9f-43fb-8872-ff40eb344244.png)
+
+Place only 1 to test that stakin is still not allowed with low reserve pool
+
+![Screen Shot 2022-03-15 at 10 42 16 am](https://user-images.githubusercontent.com/9831342/158287383-f6ec8590-cc69-4c28-872b-f77d9857fae8.png)
 
 Confirm that no staking because reserve pool has some, but not enough; estimate staking 10, 000 tokens for 3 days at 10% will earn 8.2 tokens interest
 `((10000 * 0.1)/365) * 3 = 8.21917808219`
 
 After [sending additional 10 tokens](https://ropsten.etherscan.io/tx/0xf3f03b80791da6c0c993f99e15ec3d133b3457796d10c20f31b694c7e61e10b1) (making 11 in the reserve pool total) from the owner to the contract the following can go ahead.
 
+![Screen Shot 2022-03-15 at 10 51 27 am](https://user-images.githubusercontent.com/9831342/158287466-7a7226f6-3c09-4c72-b4c6-84e0b077248a.png)
+
 First the user approves the spend
 
+![Screen Shot 2022-03-15 at 10 52 08 am](https://user-images.githubusercontent.com/9831342/158287484-17a382ef-7094-48a7-b5a8-b75157f6d86d.png)
+
+Once transaction is successful, we can see the admin screen with the details
+
+![Screen Shot 2022-03-15 at 11 54 08 am](https://user-images.githubusercontent.com/9831342/158290492-b94ce827-baae-4aad-a5cb-fe117d559e49.png)
+
+The user's home screen also shows details/balances for the user in detail, as shown below
+
+![Screen Shot 2022-03-15 at 11 55 12 am](https://user-images.githubusercontent.com/9831342/158290566-9ee91d5d-54cd-443a-92b9-985deed6e030.png)
 
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount: 
-- Transaction: 
-- Expected Interest: 
+- Timestamp: 1647307824
+- Date GMT: Mar-15-2022 01:30:24 AM +UTC
+- Amount: 10, 000 STATE
+- Transaction: [0x3f4eb5566e4d3a45af8aea91354476672425adca32e906d096ed04622c3637f3](https://ropsten.etherscan.io/tx/0x3f4eb5566e4d3a45af8aea91354476672425adca32e906d096ed04622c3637f3)
+- Expected Interest: 8.2191780821916288
+
+At this point the owner can remove any spare/unallocated tokens from the reserve pool.
+
+The amount owed to users is as follows
+
+Total STATE staked + total interest owed
+
+`10000000000000000000000 + 8219178082191628800 = 10008219178082191628800`
+
+The reserve pool is simply the `balanceOf` the interest earner's contract address in the ERC20 token i.e.
+
+![Screen Shot 2022-03-15 at 12 32 31 pm](https://user-images.githubusercontent.com/9831342/158294319-6203c957-9ab3-4d7e-8f78-81a5eb340dc9.png)
+
+`10011000000000000000000`
+
+The reserve pool amount - the total amount owned to users is what the owner is allows to withdraw.
+
+`10011000000000000000000 - 10008219178082191628800 = 2780821917808371200` i.e. `2.7808219178083712` in Eth denomination.
+
+First we attempt to withdraw that amount plus 1 Wei to test.
+
+![Screen Shot 2022-03-15 at 12 36 35 pm](https://user-images.githubusercontent.com/9831342/158294686-a8c97e2f-f76e-4aeb-862d-cf0dae736179.png)
+
+We get the correct result.
+
+![Screen Shot 2022-03-15 at 12 35 56 pm](https://user-images.githubusercontent.com/9831342/158294708-8b100954-db5a-401f-b5fe-96034b532b7b.png)
+
+If instead the exact correct amount of spare tokens is attempted, this will correctly succeed.
+
+![Screen Shot 2022-03-15 at 12 37 56 pm](https://user-images.githubusercontent.com/9831342/158294877-6305bba1-6dfc-412d-8b3c-4819c6d5908e.png)
+
+The admin user interface now highlights (in red) that the reserve pool is low and needs topping up
+
+![Screen Shot 2022-03-15 at 12 42 40 pm](https://user-images.githubusercontent.com/9831342/158295373-831460a7-c303-4dcc-b86e-8a70d362642b.png)
+
 
 #### Second stake - on day 1
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
@@ -287,14 +341,16 @@ Given the above data does this appear to be operating correctly?
 
 ## Additional manual checks performed
 
+### Staking and Un-staking
 - [x] only owner can call set percentage 
 - [x] only owner can call set time period
 - [x] the owner can not call the set percentage more than once
 - [x] the owner can not call the set time period more than once
 - [x] a user can not stake tokens if there is no STATE in the reserve pool
-- [ ] a user can not stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
-- [ ] a user can not RE stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
-- [ ] the owner can remove spare STATE from the reserve pool only (actual exact amount of reserve pool which is not allocated to a user)
-- [ ] a user can not un stake tokens whilst the term is still in play
-- [ ] a user can not RE stake tokens whilst the term is still in play
+- [x] a user can not stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
+- [x] the owner can remove spare STATE from the reserve pool only (actual exact amount of reserve pool which is not allocated to a user)
+- [x] a user can not un stake tokens whilst the term is still in play
 
+### Restaking
+- [ ] a user can not RE stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
+- [ ] a user can not RE stake tokens whilst the term is still in play
