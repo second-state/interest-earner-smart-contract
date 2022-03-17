@@ -77,9 +77,6 @@ Given the above data does this appear to be operating correctly?
 - 1 hour @ 50% simple interest per annum
 
 **Current situation**
-Contract eventually deployed on Ropsten
-Time period set is pending at https://ropsten.etherscan.io/tx/0x37d6e06c6a394d9eb77f434c1ebb4acd5eb02c4301d71539298bf0733c26b9fa
-Percentage set is pending at https://ropsten.etherscan.io/tx/0xc021b045e9145f19d6a71eedc2d161ed0332fb8870b93dd35bb2c0a3b5688421
 
 ## Contract addresses
 - Test interest earner address on the Ropsten network: `0x2f13511dbd9090bc687440d924111c3f880b97e9`
@@ -98,11 +95,15 @@ All user statistics
 
 #### First stake - on day 1
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount: 
-- Transaction: 
-- Expected Interest: 
+- Timestamp: 1647491521
+- Date GMT: Mar-17-2022 04:32:01 AM +UTC
+- Amount: 10000
+- Transaction: [0x91870da46511f0539894a3570304b3f35a47a8fcbd5bb3886ce1f40037218eff](https://ropsten.etherscan.io/tx/0x91870da46511f0539894a3570304b3f35a47a8fcbd5bb3886ce1f40037218eff)
+- Expected Interest: 0.5707762557077592 (570776255707759200)
+
+Testing that a user can not stake more than they have available in their wallet
+
+
 
 #### Second stake - on day 1
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
