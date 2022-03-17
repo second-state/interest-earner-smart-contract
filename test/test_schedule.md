@@ -102,26 +102,24 @@ All user statistics
 - Expected Interest: 0.5707762557077592 (570776255707759200)
 
 Testing that a user can not stake more than they have available in their wallet
+![Screen Shot 2022-03-17 at 2 43 37 pm](https://user-images.githubusercontent.com/9831342/158739355-6aee25d3-fb78-480a-b4b7-c1bd7bc75099.png)
 
+![Screen Shot 2022-03-17 at 2 43 26 pm](https://user-images.githubusercontent.com/9831342/158739376-71e8328c-efb5-48b1-a8c0-901c8fe91e2e.png)
 
+![Screen Shot 2022-03-17 at 2 50 11 pm](https://user-images.githubusercontent.com/9831342/158739439-b82db0db-47a8-4192-b191-da65b450df1c.png)
 
-#### Second stake - on day 1
+#### Second stake - on hour 1
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount: 
-- Transaction: 
-- Expected Interest: 
-
-#### Third stake - on day 1
-- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount: 
-- Transaction:  
-- Expected Interest: 
+- Timestamp: 1647492730
+- Date GMT: Mar-17-2022 04:52:10 AM +UTC
+- Amount: 10000
+- Transaction: [0x5ff281ea4a16df7664feeb2bff9bd92c52828720084b62f5d56eba22bc649a7e](https://ropsten.etherscan.io/tx/0x5ff281ea4a16df7664feeb2bff9bd92c52828720084b62f5d56eba22bc649a7e)
+- Expected Interest: 0.379090563165903402 (379090563165903402)
 
 #### Un stake
+
+**Term is ready for unstaking at  Thursday, 17 March 2022 15:32:01 GMT+10**
+
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
 - Timestamp: 
 - Date GMT: 
