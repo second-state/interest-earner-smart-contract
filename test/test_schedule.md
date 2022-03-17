@@ -102,9 +102,16 @@ All user statistics
 - Expected Interest: 0.5707762557077592 (570776255707759200)
 
 Testing that a user can not stake more than they have available in their wallet
+
+Remix 1
+
 ![Screen Shot 2022-03-17 at 2 43 37 pm](https://user-images.githubusercontent.com/9831342/158739355-6aee25d3-fb78-480a-b4b7-c1bd7bc75099.png)
 
+Remix 2
+
 ![Screen Shot 2022-03-17 at 2 43 26 pm](https://user-images.githubusercontent.com/9831342/158739376-71e8328c-efb5-48b1-a8c0-901c8fe91e2e.png)
+
+UI 1
 
 ![Screen Shot 2022-03-17 at 2 50 11 pm](https://user-images.githubusercontent.com/9831342/158739439-b82db0db-47a8-4192-b191-da65b450df1c.png)
 
