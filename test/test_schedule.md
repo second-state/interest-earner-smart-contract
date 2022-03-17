@@ -152,10 +152,10 @@ All user statistics
 
 ### User A
 - Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Expected interest to date: 
-- Total Staked to date: 
-- Principle withdrawn: 
-- Interest withdrawn: 
+- Expected interest to date: 13.007023718924194992 (13007023718924194992)
+- Total Staked to date: 29000
+- Principle withdrawn: 0
+- Interest withdrawn: 0
 - Correct?: 
 
 #### First stake - on day 1
@@ -232,22 +232,29 @@ The admin user interface now highlights (in red) that the reserve pool is low an
 
 ![Screen Shot 2022-03-15 at 12 42 40 pm](https://user-images.githubusercontent.com/9831342/158295373-831460a7-c303-4dcc-b86e-8a70d362642b.png)
 
+Let the owner now transfer tokens to the contract to make the reserve pool large enough to fund interest earning for new stake operations. Owner sent 100 STATE via [tx: 0x17f0a92135cea84077d99175e85c21371cfc6121b46755146373a5789d527e3c](https://ropsten.etherscan.io/tx/0x17f0a92135cea84077d99175e85c21371cfc6121b46755146373a5789d527e3c)
 
-#### Second stake - on day 1
-- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount: 
-- Transaction: 
-- Expected Interest: 
 
-#### Third stake - on day 1
+#### Second stake 
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount: 
-- Transaction:  
-- Expected Interest: 
+- Timestamp: 1647487391
+- Date GMT: Mar-17-2022 03:23:11 AM +UTC
+- Amount: 10000
+- Transaction: [0x19afd019afef0b6d17f1f4cd4a5626109212b8cb0e0ef540c9e8ff38f0fda273](https://ropsten.etherscan.io/tx/0x19afd019afef0b6d17f1f4cd4a5626109212b8cb0e0ef540c9e8ff38f0fda273)
+- Expected Interest: 2.525145865043078612 (2525145865043078612)
+
+#### Third stake
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 1647487739
+- Date GMT: Mar-17-2022 03:28:59 AM +UTC
+- Amount: 9000
+- Transaction: [0xcea3b8d4f1a8f21feeb24f6563ca54113406b7105346f4b779eaf5c120eed4c8](https://ropsten.etherscan.io/tx/0xcea3b8d4f1a8f21feeb24f6563ca54113406b7105346f4b779eaf5c120eed4c8)
+- Expected Interest: 2.26269977168948758 (2262699771689487580)
+
+This attempt to unstake is correctly denied because the round is still active.
+
+
+We will unstake on or after the correct unstaking time of Friday, 18 March 2022 11:30:24 GMT+10:00
 
 #### Un stake
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
