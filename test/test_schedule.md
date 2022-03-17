@@ -85,13 +85,13 @@ Given the above data does this appear to be operating correctly?
 ## Users
 All user statistics
 
-### User A
+### User A - first term details
 - Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Expected interest to date: 
-- Total Staked to date:
-- Principle withdrawn: 
-- Interest withdrawn: 
-- Correct?: 
+- Expected interest to date: 949866818873662602
+- Total Staked to date: 20000
+- Principle withdrawn: 20000
+- Interest withdrawn: 949866818873662602
+- Correct?: Yes
 
 #### First stake - on day 1
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
@@ -128,11 +128,69 @@ UI 1
 **Term is ready for unstaking at  Thursday, 17 March 2022 15:32:01 GMT+10**
 
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 1647497494
+- Date GMT: Mar-17-2022 06:11:34 AM +UTC
+- Amount un-staked: 20000
+- Transaction: [0xf8ca2f96772c02a9637c4bb66de8f569a1bb9118e01fe1a4137f0716663a033d](https://ropsten.etherscan.io/tx/0xf8ca2f96772c02a9637c4bb66de8f569a1bb9118e01fe1a4137f0716663a033d)
+- Interest withdrawn: 0.949866818873662602 (949866818873662602)
+
+This shows the UI returns back to offering a new staking round
+
+![Screen Shot 2022-03-17 at 4 12 35 pm](https://user-images.githubusercontent.com/9831342/158748065-c6469b84-0a7f-4145-aa41-867427d20921.png)
+
+This shows the reserve pool, total state staked and total expected interest have been updated in the admin screen.
+
+![Screen Shot 2022-03-17 at 4 13 52 pm](https://user-images.githubusercontent.com/9831342/158748269-ae9a8574-8ac1-484b-8151-672f490ea792.png)
+
+The STATE has been returned to the user's wallet with interest added (20,000.949866818873662602 (20000949866818873662602)removed from contract by user)
+
+![Screen Shot 2022-03-17 at 4 15 45 pm](https://user-images.githubusercontent.com/9831342/158748404-718e0992-0bc5-429e-8dba-c009707578fb.png)
+
+The users balance, interest owed and initial timestamp have all been reset to zero in readiness for a possible new round
+
+![Screen Shot 2022-03-17 at 4 22 53 pm](https://user-images.githubusercontent.com/9831342/158749307-897cbe01-4fdc-4ef9-9231-447dbb935542.png)
+
+
+#### New stake after unstake (a manual restake which starts a new term)
+
+### User A - second term details
+- Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Expected interest to date: 1712328767123284800
+- Total Staked to date: 30000
+- Principle withdrawn: 0
+- Interest withdrawn: 
+- Correct?: 
+- 
+#### First additional term stake - on hour 1
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 1647498356
+- Date GMT: Mar-17-2022 06:25:56 AM +UTC
+- Amount: 30000
+- Transaction: [0xa5a1fb0d452e5c34fa9616bbcc119b7f3b0bc9fbe0c40fb3d7f8d4cc504bb2e5](https://ropsten.etherscan.io/tx/0xa5a1fb0d452e5c34fa9616bbcc119b7f3b0bc9fbe0c40fb3d7f8d4cc504bb2e5)
+- Expected Interest: 1.7123287671232848 (1712328767123284800)
+
+The values compared to above to demonstrate new balances are correct i.e. interest owed, balance, new time period and so forth
+
+![Screen Shot 2022-03-17 at 4 28 11 pm](https://user-images.githubusercontent.com/9831342/158750054-28c6d343-f53e-4e5a-b2c4-6df78a18d37c.png)
+
+User home screen in UI also confirms
+
+![Screen Shot 2022-03-17 at 4 29 30 pm](https://user-images.githubusercontent.com/9831342/158750141-14534aa9-b115-409e-8829-321284d565a1.png)
+
+Admin screen also shows new balances
+
+![Screen Shot 2022-03-17 at 4 30 03 pm](https://user-images.githubusercontent.com/9831342/158750217-13cbde08-285d-428a-ba70-6ee183baf953.png)
+
+#### Un stake
+
+**Term is ready for unstaking at  Thursday, 17 March 2022 15:32:01 GMT+10**
+
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
 - Timestamp: 
 - Date GMT: 
 - Amount un-staked: 
-- Transaction:  
-- Interest withdrawn: 
+- Transaction: 
+- Interest withdrawn:
 
 #### Correctness
 Given the above data does this appear to be operating correctly?
