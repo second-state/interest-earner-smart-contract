@@ -253,6 +253,7 @@ Let the owner now transfer tokens to the contract to make the reserve pool large
 
 This attempt to unstake is correctly denied because the round is still active.
 
+![Screen Shot 2022-03-17 at 1 51 38 pm](https://user-images.githubusercontent.com/9831342/158734107-1a5d55b6-f426-404c-918e-a028d3faa6a2.png)
 
 We will unstake on or after the correct unstaking time of Friday, 18 March 2022 11:30:24 GMT+10:00
 
