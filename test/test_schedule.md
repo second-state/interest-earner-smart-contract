@@ -183,8 +183,6 @@ Admin screen also shows new balances
 
 #### Un stake
 
-**Term is ready for unstaking at  Thursday, 17 March 2022 15:32:01 GMT+10**
-
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
 - Timestamp: 
 - Date GMT: 
