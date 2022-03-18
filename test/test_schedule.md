@@ -6,9 +6,7 @@
 **Current situation**
 
 This contract will still be tested to completion, even though there have been slight code changes and future tests over and above this one.
-At present waiting on withdraw tokens from reserve pool so that the tokens can be used in other tests
-Tx is pending: 0xfa9f281f2e573127f6f78a1b6532608d452910c5f14ec86b5a6eff853311a0c6
-Check back later to continue
+Term has not elapsed during this session of testing; so next session will see unstaking.
 
 ## Contract addresses
 - Test interest earner address on the Ropsten network: `0xa45985abdFA5Ca853104Fb9104Dd8C4D75Cc2Ea2`
@@ -54,6 +52,20 @@ As this third stake is made at a similar time of day (this time with 6 whole day
 `(((1.641736428208793488 * 50) / 6) * 7) = 95.76795831217962`
 
 This shows that the incremental staking (at a different time with a different amount) is accurate. When normalized they are both 95 STATE.
+
+Admin screen shows amount owing
+
+<img width="646" alt="Screen Shot 2022-03-18 at 1 47 18 pm" src="https://user-images.githubusercontent.com/9831342/158934051-ffd53900-0b90-42b6-8da4-47d7d96227b1.png">
+
+Home screen is correctly showing information also
+
+<img width="643" alt="Screen Shot 2022-03-18 at 1 47 59 pm" src="https://user-images.githubusercontent.com/9831342/158934102-28e8f3d5-df8e-4b97-a186-e02dca443938.png">
+
+Unstaking is almost ready (term has not elapsed fully)
+
+UI shows correct error message
+
+<img width="705" alt="Screen Shot 2022-03-18 at 1 49 00 pm" src="https://user-images.githubusercontent.com/9831342/158934210-39d125ce-8877-485b-b718-698889966537.png">
 
 #### Un stake
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
