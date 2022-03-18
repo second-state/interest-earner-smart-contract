@@ -83,8 +83,9 @@ Given the above data does this appear to be operating correctly?
 
 ---
 
-# Code was update after this point 
+# Code was updated after this point 
 **Changes were made to the `unstakeAllTokensAndWithdrawInterestEarned` function only**
+
 The following a a re-test which runs the new code
 
 ## Test staking schedule 2
