@@ -14,7 +14,7 @@ A smart contract which allows users to stake and un-stake a specified ERC20 toke
 
 ### Compile
 
-- [ ] Compile the [InterestEarner.sol](https://github.com/second-state/interest-earner-smart-contract/blob/main/InterestEarner.sol) contract using Solidity `0.8.11` via the [Remix IDE](https://remix.ethereum.org/). 
+- [ ] Compile the [InterestEarner.sol](https://github.com/second-state/interest-earner-smart-contract/blob/main/InterestEarner.sol) contract using Solidity `0.8.11` via the [Remix IDE](https://remix.ethereum.org/). Using version `0.8.11` is important because it provides overflow checks and is compatible with the version of SafeMath which the contract uses.
 
 ![Screen Shot 2022-03-14 at 10 19 22 am](https://user-images.githubusercontent.com/9831342/158085888-03dc1213-0b55-440b-a2ad-199b3fef54cd.png)
 
