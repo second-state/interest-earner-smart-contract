@@ -71,7 +71,9 @@ Given the above data does this appear to be operating correctly?
 
 ---
 
-# Code update after this point (`unstakeAllTokensAndWithdrawInterestEarned` function only)
+# Code was update after this point 
+**Changes were made to the `unstakeAllTokensAndWithdrawInterestEarned` function only**
+The following a a re-test which runs the new code
 
 ## Test staking schedule 2
 - 1 hour @ 50% simple interest per annum
@@ -193,8 +195,7 @@ Admin screen also shows new balances
 #### Correctness
 Given the above data does this appear to be operating correctly?
 
-- [✅] Yes
-- [ ] No
+✅ Yes
 
 ---
 
@@ -216,9 +217,9 @@ All user statistics
 - Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
 - Expected interest to date: 13.007023718924194992 (13007023718924194992)
 - Total Staked to date: 29000
-- Principle withdrawn: 0
-- Interest withdrawn: 0
-- Correct?: 
+- Principle withdrawn: 29000
+- Interest withdrawn: 13.007023718924194992 (13007023718924194992)
+- Correct?: Yes
 
 #### First stake - on day 1
 
@@ -319,23 +320,37 @@ This attempt to unstake is correctly denied because the round is still active.
 
 We will unstake on or after the correct unstaking time of Friday, 18 March 2022 11:30:24 GMT+10:00
 
+The state of the contract is as follows, 29000 tokens ready for unstaking
+
+<img width="552" alt="Screen Shot 2022-03-18 at 1 26 37 pm" src="https://user-images.githubusercontent.com/9831342/158932300-4b051734-2775-4289-8e84-04a5cf2f01c2.png">
+
+
 #### Un stake
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount un-staked: 
-- Transaction:  
-- Interest withdrawn: 
+- Timestamp: 1647574426
+- Date GMT: Mar-18-2022 03:33:46 AM +UTC
+- Amount un-staked: 29000
+- Transaction:  [0x065c5fe360493be2fedf58582ea99e776f293839a03a968ed93b5b0358402d5d](https://ropsten.etherscan.io/tx/0x065c5fe360493be2fedf58582ea99e776f293839a03a968ed93b5b0358402d5d)
+- Interest withdrawn: 13.007023718924194992 (13007023718924194992)
+
+User screen shows correct information
+
+<img width="647" alt="Screen Shot 2022-03-18 at 1 37 01 pm" src="https://user-images.githubusercontent.com/9831342/158933706-f929fed0-0dac-4fc6-980d-d74c44f260a3.png">
+
+Administration screen is correct also
+
+<img width="657" alt="Screen Shot 2022-03-18 at 1 37 19 pm" src="https://user-images.githubusercontent.com/9831342/158933720-ddb1f1bf-d578-4a4a-8aa3-aec539949495.png">
 
 #### Correctness
 Given the above data does this appear to be operating correctly?
 
-- [ ] Yes
-- [ ] No
+✅ Yes
 
 ---
 
-## Test staking schedule 3 - with RE-staking (optional for future release)
+## Test staking schedule 3 - with RE-staking 
+**This testing is for future release which has restaking implemented**
+
 - 1 Day @ 10% simple interest per annum
 
 ## Contract addresses
