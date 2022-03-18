@@ -157,9 +157,9 @@ The users balance, interest owed and initial timestamp have all been reset to ze
 - Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
 - Expected interest to date: 1712328767123284800
 - Total Staked to date: 30000
-- Principle withdrawn: 0
-- Interest withdrawn: 
-- Correct?: 
+- Principle withdrawn: 30000
+- Interest withdrawn: 1712328767123284800
+- Correct?: Yes
 - 
 #### First additional term stake - on hour 1
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
@@ -184,16 +184,16 @@ Admin screen also shows new balances
 #### Un stake
 
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount un-staked: 
-- Transaction: 
-- Interest withdrawn:
+- Timestamp: 1647562692
+- Date GMT: Mar-18-2022 12:18:12 AM +UTC
+- Amount un-staked: 30000
+- Transaction: [0xedc423490bbd46403f2ea1d4593bed671288b0cafc6b52be8494083e902dc065](https://ropsten.etherscan.io/tx/0xedc423490bbd46403f2ea1d4593bed671288b0cafc6b52be8494083e902dc065)
+- Interest withdrawn: 1.7123287671232848 (1712328767123284800)
 
 #### Correctness
 Given the above data does this appear to be operating correctly?
 
-- [ ] Yes
+- [✅] Yes
 - [ ] No
 
 ---
@@ -222,7 +222,7 @@ All user statistics
 
 #### First stake - on day 1
 
-Starting out with newly deployed contract; reserve pool is emplty.
+Starting out with newly deployed contract; reserve pool is emplty
 
 ![Screen Shot 2022-03-15 at 10 24 36 am](https://user-images.githubusercontent.com/9831342/158287343-62ecb820-a140-4119-b42d-99be62152968.png)
 
@@ -412,15 +412,15 @@ Given the above data does this appear to be operating correctly?
 ## Additional manual checks performed
 
 ### Staking and Un-staking
-- [x] only owner can call set percentage 
-- [x] only owner can call set time period
-- [x] the owner can not call the set percentage more than once
-- [x] the owner can not call the set time period more than once
-- [x] a user can not stake tokens if there is no STATE in the reserve pool
-- [x] a user can not stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
-- [x] the owner can remove spare STATE from the reserve pool only (actual exact amount of reserve pool which is not allocated to a user)
-- [x] a user can not un stake tokens whilst the term is still in play
-- [x] a user can not stake tokens if they do not have that amount of tokens freely available in their wallet
+- [✅] only owner can call set percentage 
+- [✅] only owner can call set time period
+- [✅] the owner can not call the set percentage more than once
+- [✅] the owner can not call the set time period more than once
+- [✅] a user can not stake tokens if there is no STATE in the reserve pool
+- [✅] a user can not stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
+- [✅] the owner can remove spare STATE from the reserve pool only (actual exact amount of reserve pool which is not allocated to a user)
+- [✅] a user can not un stake tokens whilst the term is still in play
+- [✅] a user can not stake tokens if they do not have that amount of tokens freely available in their wallet
 
 ### Restaking
 - [ ] a user can not RE stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
