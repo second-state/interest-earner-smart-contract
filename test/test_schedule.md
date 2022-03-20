@@ -436,6 +436,74 @@ Given the above data does this appear to be operating correctly?
 
 ---
 
+## Test staking schedule 4 - with RE-staking 
+**This testing is for the release which has restaking implemented**
+
+- 1 hour @ 10% simple interest per annum
+
+## Contract addresses
+- Test interest earner address on the Ropsten network: 0x3dFCeA572F817D6d03020885d5f210bD56038625
+- Test ERC20 contract address on the Ropsten network : 0xC9A46174D2dE2c5DA9DaD1226F58BdA9a0698Ba1
+
+## Users
+All user statistics
+
+### User A
+- Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Expected interest to date: 
+- Total Staked to date:
+- Principle withdrawn: 
+- Interest withdrawn: 
+- Correct?: 
+
+#### First stake 
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 1647747354
+- Date GMT: Mar-20-2022 03:35:54 AM +UTC
+- Amount: 30000 STATE
+- Transaction: [0x33dfc220c33fcb6012116521501b8a5f1cb515117264fea753a6d83c0227b2fd](https://ropsten.etherscan.io/tx/0x33dfc220c33fcb6012116521501b8a5f1cb515117264fea753a6d83c0227b2fd)
+- Expected Interest: 0.3424657534246548 (342465753424654800)
+
+#### Second stake 
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount: 
+- Transaction: 
+- Expected Interest: 
+
+#### First RE stake - (after initial staking term has expired)
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount: 
+- Transaction:  
+- Expected Interest: 
+
+#### Second RE stake - (after first re-staking term has expired)
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount: 
+- Transaction:  
+- Expected Interest: 
+
+#### Un stake - on day 4 (after second re-stake term has expired)
+- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount un-staked: 
+- Transaction:  
+- Interest withdrawn: 
+
+#### Correctness
+Given the above data does this appear to be operating correctly?
+
+- [ ] Yes
+- [ ] No
+
+---
+
 ## Additional manual checks performed
 
 ### Staking and Un-staking
@@ -451,4 +519,4 @@ Given the above data does this appear to be operating correctly?
 
 ### Restaking
 - [ ] a user can not RE stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
-- [ ] a user can not RE stake tokens whilst the term is still in play
+- [✅] a user can not RE stake tokens whilst the term is still in play
