@@ -19,9 +19,9 @@ All user statistics
 - Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
 - Expected interest to date: 114094235159816243816
 - Total Staked to date: 61000 (61000000000000000000000)
-- Principle withdrawn: 0
-- Interest withdrawn: 0
-- Correct?: 
+- Principle withdrawn: 61000
+- Interest withdrawn: 114094235159816243816
+- Correct?: Yes
 
 #### First stake
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
@@ -69,17 +69,16 @@ UI shows correct error message
 
 #### Un stake
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount un-staked: 
-- Transaction:  
-- Interest withdrawn: 
+- Timestamp: 1647745386
+- Date GMT: Mar-20-2022 03:03:06 AM +UTC
+- Amount un-staked: 61000
+- Transaction: [0x8b4fd7fa5c4ca3011366db680538cce959f7f85313c519cc5b4ce6e35b03bc30](https://ropsten.etherscan.io/tx/0x8b4fd7fa5c4ca3011366db680538cce959f7f85313c519cc5b4ce6e35b03bc30)
+- Interest withdrawn: 114.094235159816243816 (114094235159816243816)
 
 #### Correctness
 Given the above data does this appear to be operating correctly?
 
-- [ ] Yes
-- [ ] No
+✅ Yes
 
 ---
 
