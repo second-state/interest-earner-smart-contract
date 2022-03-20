@@ -211,6 +211,8 @@ contract InterestEarner {
         require(weiPerSecond > 0, "Interest on this amount is too low to calculate, please try a greater amount");
         // Let's calculate the release date
         uint256 releaseEpoch = initialStakingTimestamp[msg.sender].add(timePeriod);
+        // Test to see if the term has already ended
+        require(block.timestamp < releaseEpoch, "Term has already ended");
         // Let's fragment the interest earned per annum down to the remaining time left on this staking round
         require(releaseEpoch.sub(block.timestamp) > 0, "There is not enough time left to stake for this current round, please un-stake first");
         uint256 secondsRemaining = releaseEpoch.sub(block.timestamp);
