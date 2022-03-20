@@ -449,9 +449,19 @@ Given the above data does this appear to be operating correctly?
 All user statistics
 
 ### User A
+This user's term matures at 20/03/2022, 14:36:55
 - Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Expected interest to date: 
-- Total Staked to date:
+- Expected interest to date: 0.575342465753420064
+- Total Staked to date: 60000
+- Principle withdrawn: 
+- Interest withdrawn: 
+- Correct?: 
+
+### User B
+This different user's term will mature at 20/03/2022, 15:08:02
+- Address: 0x215B11f1EBFa6cFcfDe5bd65d027d04e3eC3d3A8
+- Expected interest to date: 0.5707762557077592
+- Total Staked to date: 50000
 - Principle withdrawn: 
 - Interest withdrawn: 
 - Correct?: 
@@ -466,13 +476,22 @@ All user statistics
 
 #### Second stake 
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount: 
-- Transaction: 
-- Expected Interest: 
+- Timestamp: 1647748567
+- Date GMT: Mar-20-2022 03:56:07 AM +UTC
+- Amount: 30000
+- Transaction: [0x7533bd1ace54b55f3f82716b5384bed5b1cef9d3e2726a3ad25275d598634ca4](https://ropsten.etherscan.io/tx/0x7533bd1ace54b55f3f82716b5384bed5b1cef9d3e2726a3ad25275d598634ca4)
+- Expected Interest: 0.232876712328765264 (232876712328765264)
 
-#### First RE stake - (after initial staking term has expired)
+#### New user stakes in parallel stake 
+This different user's term will mature at 20/03/2022, 15:08:02
+- User: 0x215B11f1EBFa6cFcfDe5bd65d027d04e3eC3d3A8
+- Timestamp: 1647749282
+- Date GMT: Mar-20-2022 04:08:02 AM +UTC
+- Amount: 50000
+- Transaction: [0x1a34f2d7fa8fc4f6d94757adf7b1b591ab835fce9854b1f0e65a1c7a8b957003](https://ropsten.etherscan.io/tx/0x1a34f2d7fa8fc4f6d94757adf7b1b591ab835fce9854b1f0e65a1c7a8b957003)
+- Expected Interest: 0.5707762557077592
+
+#### First RE stake - (user A - after initial staking term has expired)
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
 - Timestamp: 
 - Date GMT: 
@@ -480,7 +499,7 @@ All user statistics
 - Transaction:  
 - Expected Interest: 
 
-#### Second RE stake - (after first re-staking term has expired)
+#### Second RE stake - (user A after first re-staking term has expired)
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
 - Timestamp: 
 - Date GMT: 
@@ -488,8 +507,24 @@ All user statistics
 - Transaction:  
 - Expected Interest: 
 
-#### Un stake - on day 4 (after second re-stake term has expired)
+#### Un stake - (user A after second re-stake term has expired)
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
+- Timestamp: 
+- Date GMT: 
+- Amount un-staked: 
+- Transaction:  
+- Interest withdrawn: 
+
+#### First RE stake - (user B)
+- User: 0x215B11f1EBFa6cFcfDe5bd65d027d04e3eC3d3A8
+- Timestamp: 
+- Date GMT: 
+- Amount: 
+- Transaction:  
+- Expected Interest: 
+
+#### Un stake - (user B)
+- User: 0x215B11f1EBFa6cFcfDe5bd65d027d04e3eC3d3A8
 - Timestamp: 
 - Date GMT: 
 - Amount un-staked: 
@@ -518,5 +553,5 @@ Given the above data does this appear to be operating correctly?
 - [✅] a user can not stake tokens if they do not have that amount of tokens freely available in their wallet
 
 ### Restaking
-- [ ] a user can not RE stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
+- [✅] a user can not RE stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
 - [✅] a user can not RE stake tokens whilst the term is still in play
