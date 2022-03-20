@@ -525,11 +525,11 @@ This different user's term will mature at 20/03/2022, 15:08:02
 
 #### First RE stake - (user B)
 - User: 0x215B11f1EBFa6cFcfDe5bd65d027d04e3eC3d3A8
-- Timestamp: 
-- Date GMT: 
-- Amount: 
-- Transaction:  
-- Expected Interest: 
+- Timestamp: 1647753279
+- Date GMT: Mar-20-2022 05:14:39 AM +UTC
+- Amount: 50000.5707762557077592
+- Transaction: [0x14c1c551b7388a4d91f851cf3dde60bc511b3bb4cd6096644f33fe9fc9899a09](https://ropsten.etherscan.io/tx/0x14c1c551b7388a4d91f851cf3dde60bc511b3bb4cd6096644f33fe9fc9899a09)
+- Expected Interest: 0.5707827714184416
 
 #### Second RE stake - (user B)
 - User: 0x215B11f1EBFa6cFcfDe5bd65d027d04e3eC3d3A8
