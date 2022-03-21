@@ -478,11 +478,11 @@ Re-staking success (admin page)
 
 #### Un stake - (user A after second re-stake term has expired)
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount un-staked: 
-- Transaction:  
-- Interest withdrawn: 
+- Timestamp: 1647840800
+- Date GMT: Mar-21-2022 05:33:20 AM +UTC
+- Amount un-staked: 100001.141552511415522
+- Transaction:  [0x8e02ebe058e873f4ec9cb84707bbae3ee03640101c310f8b76210cc7d619942a](https://ropsten.etherscan.io/tx/0x8e02ebe058e873f4ec9cb84707bbae3ee03640101c310f8b76210cc7d619942a)
+- Interest withdrawn: 1.1415655428368868
 
 #### First RE stake - (user B)
 
@@ -529,8 +529,8 @@ Success
 ![Screen Shot 2022-03-21 at 2 06 38 pm](https://user-images.githubusercontent.com/9831342/159204119-6f206ce7-dae2-4fc2-be9d-4c27cd71fcc2.png)
 
 - User: 0x215B11f1EBFa6cFcfDe5bd65d027d04e3eC3d3A8
-- Timestamp: 
-- Date GMT: 
+- Timestamp: 1647835578
+- Date GMT: Mar-21-2022 04:06:18 AM +UTC
 - Amount un-staked: 50001.1415590271262008
 - Transaction:  [0x092e7a6b40926c2f69bedb1687b976a74401399b4e8b7a4a592c3766e44209a9](https://ropsten.etherscan.io/tx/0x092e7a6b40926c2f69bedb1687b976a74401399b4e8b7a4a592c3766e44209a9)
 - Interest withdrawn: 0.5707892872035036
@@ -553,8 +553,16 @@ Both contract (above) and UI (below) show correct operations.
 #### Correctness
 Given the above data does this appear to be operating correctly?
 
-- [ ] Yes
-- [ ] No
+- [✅] Yes
+
+User home screen shows correct values.
+
+<img width="761" alt="Screen Shot 2022-03-21 at 3 34 34 pm" src="https://user-images.githubusercontent.com/9831342/159210838-abaa06ef-8625-445a-bd1f-de525129f721.png">
+
+
+Admin screen shows no users staked at the end of this testing, which is correct. Owner can withdraw unallocated funds.
+
+<img width="760" alt="Screen Shot 2022-03-21 at 3 46 02 pm" src="https://user-images.githubusercontent.com/9831342/159210776-b9ff76fe-82c1-4ba3-ac90-7129fa321dfb.png">
 
 ---
 
