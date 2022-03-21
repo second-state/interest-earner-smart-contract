@@ -449,10 +449,10 @@ Given the above data does this appear to be operating correctly?
 All user statistics
 
 ### User A
-This user's term matures at 20/03/2022, 14:36:55
+This user's term matures at 21/03/2022, 15:02:00
 - Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Expected interest to date: 0.575342465753420064
-- Total Staked to date: 60000
+- Expected interest to date: 1141565542836886800
+- Total Staked to date: 100001141552511415522000
 - Principle withdrawn: 
 - Interest withdrawn: 
 - Correct?: 
@@ -519,19 +519,38 @@ Here are concrete values
 
 `150003712328767123281200 >= 150001141559027126200800 + 1712341798619025600 + 1141565542836888400`
 
-
 The above is equal to `false` so the re-stake should revert, let's check.
 
+![Screen Shot 2022-03-21 at 11 13 29 am](https://user-images.githubusercontent.com/9831342/159194545-2c60e3ec-55fa-4fc5-b1b3-0807cff950e8.png)
 
+Both the contract (see above) and the UI (see below) are correctly denying the re-stake at this time.
+
+![Screen Shot 2022-03-21 at 1 48 41 pm](https://user-images.githubusercontent.com/9831342/159202935-a29b7343-14fb-4cd5-9427-33ec3186c41f.png)
+
+If we look at those amounts we see that the reserve pool is just `0.2831376014588336` short for this specific re-stake. The owner can top it up now and we can try again, to test functionality. Below shows `0.3` sent to the reserve pool.
+
+![Screen Shot 2022-03-21 at 1 54 25 pm](https://user-images.githubusercontent.com/9831342/159203320-34f90465-96ae-46b4-8294-f2ce7de8c89b.png)
+
+Restake is in progress
+
+![Screen Shot 2022-03-21 at 1 55 59 pm](https://user-images.githubusercontent.com/9831342/159203413-1ddbe9c0-3fd2-4259-bd18-1a82e04c70a3.png)
+
+Re-staking success (user home page)
+
+![Screen Shot 2022-03-21 at 1 57 01 pm](https://user-images.githubusercontent.com/9831342/159203466-309f02a3-c010-4889-b140-b864e7d77cd2.png)
+
+Re-staking success (admin page)
+
+![Screen Shot 2022-03-21 at 1 57 42 pm](https://user-images.githubusercontent.com/9831342/159203539-06d32337-9c1e-4bcb-8b84-378f4123c049.png)
 
 
 #### First RE stake - (user A after current staking term has expired)
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount: 
-- Transaction:  
-- Expected Interest: 
+- Timestamp: 1647834960
+- Date GMT: Mar-21-2022 03:56:00 AM +UTC
+- Amount: 100001.141552511415522
+- Transaction: [0x12d2c6c336ddbd6518688af1e401de02f59c3b0b287b55e8528806ab9a8e4a61](https://ropsten.etherscan.io/tx/0x12d2c6c336ddbd6518688af1e401de02f59c3b0b287b55e8528806ab9a8e4a61)
+- Expected Interest: 1.1415655428368868
 
 #### Un stake - (user A after second re-stake term has expired)
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
@@ -611,3 +630,4 @@ Given the above data does this appear to be operating correctly?
 ### Restaking
 - [✅] a user can not RE stake tokens if there is not enough STATE in the reserve pool (relative to their investement)
 - [✅] a user can not RE stake tokens whilst the term is still in play
+- [✅] a user can not RE stake tokens if there are none staked to begin with (user must stake before re-stake)
