@@ -507,6 +507,24 @@ This different user's term will mature at 20/03/2022, 15:08:02
 - Transaction: [0x484a2faa84cd4c2177fb08cb639b6d75fba73068156decde160665f546a0c679](https://ropsten.etherscan.io/tx/0x484a2faa84cd4c2177fb08cb639b6d75fba73068156decde160665f546a0c679)
 - Expected Interest: 1.141552511415522 (1141552511415522000)
 
+Next user A is going to re-stake principle + interest and therefore the reserve pool will need to have enough funds for this to occur. Firstly we can manually upfront (for testing purposes) calculate the upcoming interest amount for the upcoming stake.
+
+interest_earned_for_this_stake = `(((user_a_balance + user_a_expected_interest) * 0.1) / 365) / 24` i.e. `(((100000000000000000000000 + 1141552511415522000) * 0.1) / 365) / 24 = 1.1415655428368884` `1141565542836888400`
+
+Then we use this upcoming/potential interest for the next calclation (to check if the reserve pool is sufficient)
+
+`reserve_pool >= total_state_staked + total_expected_interest + interest_earned_for_this_stake`
+
+Here are concrete values
+
+`150003712328767123281200 >= 150001141559027126200800 + 1712341798619025600 + 1141565542836888400`
+
+
+The above is equal to `false` so the re-stake should revert, let's check.
+
+
+
+
 #### First RE stake - (user A after current staking term has expired)
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
 - Timestamp: 
@@ -532,7 +550,7 @@ Before re-stake
 - User: 0x215B11f1EBFa6cFcfDe5bd65d027d04e3eC3d3A8
 - Timestamp: 1647753279
 - Date GMT: Mar-20-2022 05:14:39 AM +UTC
-- Amount: 50000.5707762557077592
+- Amount: 50000.5707762557077592 (50000.5707762557077592)
 - Transaction: [0x14c1c551b7388a4d91f851cf3dde60bc511b3bb4cd6096644f33fe9fc9899a09](https://ropsten.etherscan.io/tx/0x14c1c551b7388a4d91f851cf3dde60bc511b3bb4cd6096644f33fe9fc9899a09)
 - Expected Interest: 0.5707827714184416
 
@@ -542,11 +560,24 @@ After re-stake
 
 #### Second RE stake - (user B)
 - User: 0x215B11f1EBFa6cFcfDe5bd65d027d04e3eC3d3A8
-- Timestamp: 
-- Date GMT: 
-- Amount: 
-- Transaction:  
-- Expected Interest: 
+- Timestamp: 1647819692
+- Date GMT: Mar-20-2022 11:41:32 PM +UTC
+- Amount: 50001.1415590271262008
+- Transaction: [0xb4689c9cbec3ff4a7182f826db8a8090a6c135e5e689934cbcc12ef0841e341a](https://ropsten.etherscan.io/tx/0xb4689c9cbec3ff4a7182f826db8a8090a6c135e5e689934cbcc12ef0841e341a)
+- Expected Interest: 0.5707892872035036
+
+After second re-stake
+
+![Screen Shot 2022-03-21 at 9 42 48 am](https://user-images.githubusercontent.com/9831342/159191139-93f96934-974a-44ab-99c4-21db5ed57130.png)
+
+The compounding calculations during re-staking example are demonstrated below
+
+`second_restake_amount - first_restake_expected_interest = first_restake_amount`
+
+For example, the following is true and correct
+
+`50001141559027126200800 - 570782771418441600 = 50000570776255707759200`
+
 
 #### Un stake - (user B)
 - User: 0x215B11f1EBFa6cFcfDe5bd65d027d04e3eC3d3A8
