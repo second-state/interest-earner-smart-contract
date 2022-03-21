@@ -360,82 +360,6 @@ Given the above data does this appear to be operating correctly?
 
 ---
 
-## Test staking schedule 3 - with RE-staking 
-**This testing is for future release which has restaking implemented**
-
-- 1 Day @ 10% simple interest per annum
-
-## Contract addresses
-- Test interest earner address on the Ropsten network: 
-- Test ERC20 contract address on the Ropsten network : 
-
-## Users
-All user statistics
-
-### User A
-- Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Expected interest to date: 
-- Total Staked to date:
-- Principle withdrawn: 
-- Interest withdrawn: 
-- Correct?: 
-
-#### First stake - on day 1
-- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount: 
-- Transaction: 
-- Expected Interest: 
-
-#### Second stake - on day 1
-- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount: 
-- Transaction: 
-- Expected Interest: 
-
-#### Third stake - on day 1
-- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount: 
-- Transaction:  
-- Expected Interest: 
-
-#### First RE stake - on day 2 (after initial staking term has expired)
-- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount: 
-- Transaction:  
-- Expected Interest: 
-
-#### Second RE stake - on day 3 (after first re-stake term has expired)
-- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount: 
-- Transaction:  
-- Expected Interest: 
-
-#### Un stake - on day 4 (after second re-stake term has expired)
-- User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Timestamp: 
-- Date GMT: 
-- Amount un-staked: 
-- Transaction:  
-- Interest withdrawn: 
-
-#### Correctness
-Given the above data does this appear to be operating correctly?
-
-- [ ] Yes
-- [ ] No
-
----
-
 ## Test staking schedule 4 - with RE-staking 
 **This testing is for the release which has restaking implemented**
 
@@ -607,9 +531,16 @@ Success
 - User: 0x215B11f1EBFa6cFcfDe5bd65d027d04e3eC3d3A8
 - Timestamp: 
 - Date GMT: 
-- Amount un-staked: 
-- Transaction:  
-- Interest withdrawn: 
+- Amount un-staked: 50001.1415590271262008
+- Transaction:  [0x092e7a6b40926c2f69bedb1687b976a74401399b4e8b7a4a592c3766e44209a9](https://ropsten.etherscan.io/tx/0x092e7a6b40926c2f69bedb1687b976a74401399b4e8b7a4a592c3766e44209a9)
+- Interest withdrawn: 0.5707892872035036
+
+`principle` + `interest`
+
+`50001141559027126200800 + 570789287203503600 = 50001.7123483143297044`
+
+![Screen Shot 2022-03-21 at 2 15 12 pm](https://user-images.githubusercontent.com/9831342/159204667-db5bff93-36ba-455f-932e-6764c96a47af.png)
+
 
 #### Test user B attempt to re-stake when no user B tokens are staked
 
