@@ -599,12 +599,25 @@ For example, the following is true and correct
 
 
 #### Un stake - (user B)
+
+Success
+
+![Screen Shot 2022-03-21 at 2 06 38 pm](https://user-images.githubusercontent.com/9831342/159204119-6f206ce7-dae2-4fc2-be9d-4c27cd71fcc2.png)
+
 - User: 0x215B11f1EBFa6cFcfDe5bd65d027d04e3eC3d3A8
 - Timestamp: 
 - Date GMT: 
 - Amount un-staked: 
 - Transaction:  
 - Interest withdrawn: 
+
+#### Test user B attempt to re-stake when no user B tokens are staked
+
+![Screen Shot 2022-03-21 at 2 09 12 pm](https://user-images.githubusercontent.com/9831342/159204288-38f32e61-85eb-4e40-99b8-c554fb58e42b.png)
+
+Both contract (above) and UI (below) show correct operations.
+
+![Screen Shot 2022-03-21 at 2 10 12 pm](https://user-images.githubusercontent.com/9831342/159204333-e5532a6a-1d3d-4951-8e39-899a9c22b6db.png)
 
 #### Correctness
 Given the above data does this appear to be operating correctly?
