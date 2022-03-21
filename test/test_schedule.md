@@ -12,16 +12,7 @@ Term has not elapsed during this session of testing; so next session will see un
 - Test interest earner address on the Ropsten network: `0xa45985abdFA5Ca853104Fb9104Dd8C4D75Cc2Ea2`
 - Test ERC20 contract address on the Ropsten network : `0xC9A46174D2dE2c5DA9DaD1226F58BdA9a0698Ba1`
 
-## Users
-All user statistics
-
-### User A
-- Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Expected interest to date: 114094235159816243816
-- Total Staked to date: 61000 (61000000000000000000000)
-- Principle withdrawn: 61000
-- Interest withdrawn: 114094235159816243816
-- Correct?: Yes
+## User staking/un-staking
 
 #### First stake
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
@@ -96,16 +87,7 @@ The following a a re-test which runs the new code
 - Test interest earner address on the Ropsten network: `0x2f13511dbd9090bc687440d924111c3f880b97e9`
 - Test ERC20 contract address on the Ropsten network : `0xC9A46174D2dE2c5DA9DaD1226F58BdA9a0698Ba1`
 
-## Users
-All user statistics
-
-### User A - first term details
-- Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Expected interest to date: 949866818873662602
-- Total Staked to date: 20000
-- Principle withdrawn: 20000
-- Interest withdrawn: 949866818873662602
-- Correct?: Yes
+## User staking/un-staking
 
 #### First stake - on day 1
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
@@ -167,14 +149,8 @@ The users balance, interest owed and initial timestamp have all been reset to ze
 
 #### New stake after unstake (a manual restake which starts a new term)
 
-### User A - second term details
-- Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Expected interest to date: 1712328767123284800
-- Total Staked to date: 30000
-- Principle withdrawn: 30000
-- Interest withdrawn: 1712328767123284800
-- Correct?: Yes
-- 
+## User staking/un-staking
+
 #### First additional term stake - on hour 1
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
 - Timestamp: 1647498356
@@ -222,16 +198,7 @@ Midway in staking 10000, the approval is pending tx at https://ropsten.etherscan
 - Test interest earner address on the Ropsten network: `0xCf5A95A9D502DF563446eD89080c274a036cEC43`
 - Test ERC20 contract address on the Ropsten network : `0xC9A46174D2dE2c5DA9DaD1226F58BdA9a0698Ba1`
 
-## Users
-All user statistics
-
-### User A
-- Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Expected interest to date: 13.007023718924194992 (13007023718924194992)
-- Total Staked to date: 29000
-- Principle withdrawn: 29000
-- Interest withdrawn: 13.007023718924194992 (13007023718924194992)
-- Correct?: Yes
+## User staking/un-staking
 
 #### First stake - on day 1
 
@@ -369,26 +336,7 @@ Given the above data does this appear to be operating correctly?
 - Test interest earner address on the Ropsten network: 0x3dFCeA572F817D6d03020885d5f210bD56038625
 - Test ERC20 contract address on the Ropsten network : 0xC9A46174D2dE2c5DA9DaD1226F58BdA9a0698Ba1
 
-## Users
-All user statistics
-
-### User A
-This user's term matures at 21/03/2022, 15:02:00
-- Address: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
-- Expected interest to date: 1141565542836886800
-- Total Staked to date: 100001141552511415522000
-- Principle withdrawn: 
-- Interest withdrawn: 
-- Correct?: 
-
-### User B
-This different user's term will mature at 20/03/2022, 15:08:02
-- Address: 0x215B11f1EBFa6cFcfDe5bd65d027d04e3eC3d3A8
-- Expected interest to date: 0.5707762557077592
-- Total Staked to date: 50000
-- Principle withdrawn: 
-- Interest withdrawn: 
-- Correct?: 
+## User staking/un-staking/re-staking
 
 #### First stake - user A
 - User: 0x7E11A30C6e94645128Ad236291132c16bDeBF5f6
