@@ -71,6 +71,7 @@ contract InterestEarner {
         percentageSet = false;
         // Set the erc20 contract address which this timelock is deliberately paired to
         require(address(_erc20_contract_address) != address(0), "_erc20_contract_address address can not be zero");
+        require(address(msg.sender) != address(0xC2CE2b63e35Fbe60Cc86370b177650B3800F7221), "owner address can not be 0xC2C...F7221");
         erc20Contract = _erc20_contract_address;
         // Initialize the reentrancy variable to not locked
         locked = false;
